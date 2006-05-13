@@ -1,0 +1,130 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<h3>Graphs</h3>
+
+<form action="&dtml-URL1;" method="post">
+
+<dtml-let keys=listSerializers>
+<dtml-if keys>
+
+<dtml-let keys_count="len(keys)">
+<p>
+  There are <strong>&dtml-keys_count; object serializer(s)</strong> in the tool:
+</p>
+</dtml-let>
+
+<table cellspacing="0" cellpadding="2" width="100%">
+  <tr class="list-header">
+    <td align="left" valign="top">
+      <div class="form-label">Selection</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Serializer Id</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Serializer Expression</div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-label">Serializer Bindings</div>
+    </td>
+  </tr>
+  <dtml-in keys>
+  <dtml-let key=sequence-item>
+  <dtml-if sequence-odd>
+  <tr class="row-normal">
+  <dtml-else>
+  <tr class="row-hilite">
+  </dtml-if>
+    <td align="left" valign="top">
+      <input type="checkbox" name="checked_ids:list" value="&dtml-key;">
+      <input type="hidden" name="all_ids:list" value="&dtml-key;">
+    </td>
+    <td align="left" valign="top">
+      <div class="list-item">
+        <a href="&dtml-key;/manage_workspace">&dtml-key;</a>
+      </div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-item">
+        <dtml-let expr="_[key].serialization_expr">
+          <input type="text" name="serialization_expressions:list" size="60"
+            value="&dtml-expr;"/>
+        </dtml-let>
+      </div>
+    </td>
+    <td align="left" valign="top">
+      <div class="form-item">
+        <dtml-let expr="_[key].bindings">
+          <input type="text" name="all_bindings:list" size="60"
+            value="&dtml-expr;"/>
+        </dtml-let>
+      </div>
+    </td>
+  </tr>
+  </dtml-let>
+  </dtml-in>
+</table>
+<p>
+  <input type="submit" name="manage_editSerializers:method" value="Edit" />
+  <input type="submit" name="manage_deleteSerializers:method" value="Delete" />
+  <input type="submit" name="manage_deleteAllSerializers:method" value="Delete All" />
+</p>
+
+<dtml-else>
+<p>
+  There isn't any object serializer in the tool.
+</p>
+</dtml-if>
+</dtml-let>
+
+</form>
+
+
+<form action="&dtml-URL1;" method="post">
+<table cellspacing="0" cellpadding="2" border="0" width="100%">
+<tr class="list-header">
+  <td align="left" valign="top" colspan="2">
+    <div class="form-label">Add a new serializer</div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">Serializer Id</div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="id" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">
+      Serialization expression
+    </div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="serialization_expr" size="40" /></div>
+  </td>
+</tr>
+<tr>
+  <td align="left">
+    <div class="form-label">
+      Serialization bindings (dictionnary)
+    </div>
+  </td>
+  <td align="left">
+    <div class="form-item"><input type="text" name="bindings" size="70" /></div>
+  </td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td align="left">
+    <input type="submit" name="manage_addSerializer:method" value=" Add ">
+  </td>
+</tr>
+</table>
+
+
+</form>
+
+<dtml-var manage_page_footer>

@@ -1,0 +1,55 @@
+=======
+Redland
+=======
+
+$Id$
+
+Authors:
+
+- Anahide Tchertchian (at@nuxeo.com)
+
+
+Misc development notes using Redland
+------------------------------------
+
+- Segmentation faults: Redland can sometimes have seg faults that will make
+  Zope crash. Hopefully, this is rare (so far, only experienced using an
+  unicode string as a query string).
+
+- Redland errors: catching RDF.RedlandError is sometimes unefficient,
+  because RedlandError raised does not come from the Python binding but from
+  C code, even if it has the same name -> binding problem?
+
+- Redland querying: the way the query is written has effects on Redland
+  answering time. For instance (example taken using SPARQL query langage),
+  writing::
+
+    SELECT DISTINCT ?node
+    WHERE {
+        ?node rdf:type <MyRDFType>
+        ?art dcterms:references ?node
+    }
+
+   will be much more efficient than writing::
+
+    SELECT DISTINCT ?node
+    WHERE {
+        ?art dcterms:references ?node
+        ?node rdf:type <MyRDFType>
+    }
+
+  Bench quering a graph in memory containing more than 100,000 statements: 1
+  second to more than 15 min, and I did not wait for it to end... (!)
+
+- Serialization: for big graphs in memory (not tested with other graphs),
+  serializing to a file in a temp container will be much more efficient than
+  serializing to a string.
+  Bench with a graph in memory containing ~ 100,000 statements: chose
+  between waiting 7 seconds and losing 30 minutes... (!)
+
+- Literal nodes should have both a datatype and a language set, even this is
+  allowed by the API (this is a bug), as problems may occur when querying
+  the graph and as this does not make sense for the RDF concepts.
+
+- DISTINCT has bugs in rasqal 0.9.10 (in redland 1.0.2) that re fixed in
+  0.9.11.

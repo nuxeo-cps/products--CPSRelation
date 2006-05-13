@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="redland_graph" meta_type="Redland Graph">
+ <property name="backend">mysql</property>
+ <property name="namespace_bindings">
+  <element value="rdf http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+  <element value="exp http://www.example.org/"/>
+ </property>
+ <property name="bdb_path"></property>
+ <property
+    name="mysql_options">"host='localhost',port=3306,user='test',password='pass'"</property>
+</object>

@@ -1,0 +1,40 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<h3> <code>portal_serializer</code> Tool </h3>
+
+<p>
+  The Serializer tool provides services to serialize any kind of object.
+</p>
+
+<p>
+  It manages object serializers, which are objects holding a TALES
+  expression with a namespace.
+</p>
+
+<p>
+  Object serializers can be added to this tool in order to provide a kind of
+  serialization for an object. The expression is supposed to return a list
+  of triples representing the object RDF serialization.
+</p>
+
+<h4>Serializer tool API</h4>
+
+<p>
+  The serializer tool methods include the following features:
+</p>
+<ul>
+  <li>
+    object serializers management (add/delete/get object serializers).
+  </li>
+  <li>
+    object serialization as triples (get triples representing a given
+    object).
+  </li>
+  <li>
+    object serialization following the RDF/XML syntax (get a RDF/XML file
+    representing the object relation ; currently requires Redland).
+  </li>
+</ul>
+
+<dtml-var manage_page_footer>

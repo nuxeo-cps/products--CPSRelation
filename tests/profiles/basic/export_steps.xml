@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<export-steps>
+ <export-step id="relation"
+              handler="Products.CPSRelation.exportimport.exportRelationTool"
+              title="Relation Tool">
+  Export relation tool and relation graphs.
+ </export-step>
+ <export-step id="serialization"
+              handler="Products.CPSRelation.exportimport.exportObjectSerializerTool"
+              title="ObjectSerializer Tool">
+  Export object serializer tool and serializers.
+ </export-step>
+ <export-step id="step_registries"
+              handler="Products.GenericSetup.tool.exportStepRegistries"
+              title="Export import / export steps.">
+  Export current contents of import step registry and export step registry.
+ </export-step>
+</export-steps>

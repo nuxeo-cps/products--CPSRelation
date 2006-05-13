@@ -1,0 +1,37 @@
+=============
+Relation tool
+=============
+
+$Id$
+
+Authors:
+
+- Anahide Tchertchian (at@nuxeo.com)
+
+
+Introduction
+============
+
+The Relation Tool can manage several and different kinds of graphs
+representing labeled relations between objects.
+
+Currently, graphs supported are:
+
+- simple IOBTrees managing relations between integer unique identifiers and
+  tuples of integer unique identifiers. This is the historical relations
+  management, useful to store relations between CPS documents, using their
+  docid in the repository as unique integer identifiers.
+- Redland graphs managing RDF graphs provided by Redland using the python
+  binding.
+
+
+Relation tool API
+=================
+
+The relation tool methods include the following features:
+
+- graphs management (add/delete/get graphs)
+- relations management (add/delete relations)
+- graph queries (only for Redland graphs)
+
+

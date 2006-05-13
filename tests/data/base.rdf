@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:cps="http://cps-project.org/node/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:uuid="http://cps-project.org/uuid/">
+  <rdf:Description rdf:about="http://cps-project.org/node/cps">
+    <cps:techno rdf:nodeID="techno"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cps-project.org/node/cps">
+    <cps:title>CPS Project</cps:title>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="techno">
+    <cps:title>Zope/CPS</cps:title>
+  </rdf:Description>
+</rdf:RDF>

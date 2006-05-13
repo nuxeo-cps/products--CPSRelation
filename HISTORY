@@ -1,0 +1,305 @@
+*******************************************
+** CPSRelation V1.9.4 [R1 build 2006/04/24-15:16 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 44891
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Present the graph properties as first tab in ZMI.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.9.3 [R1 build 2006/04/08-13:47 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 35009
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Avoid duplication of rdf binding in Redland graphs
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.9.2 [R1 build 2006/03/30-02:11 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 34814
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Installer does not use CPSInstaller anymore, it calls the setup tool and
+  imports the extension profile.
+
+*******************************************
+** CPSRelation V1.9.1 [R1 build 2006/03/08-15:38 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 34170
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Better tests for Redland serialization
+
+*******************************************
+** CPSRelation V1.9.0 [R1 build 2006/03/03-17:29 by ben]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 33855
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Changing the profile keyword 'graphs' into 'relations'
+
+*******************************************
+** CPSRelation V1.8.0 [R1 build 2006/02/14-18:21 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 32841
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Adding default profile and export/import using GenericSetup
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Use zope interfaces
+- Use lines for bindings settings in ZMI
+
+*******************************************
+** CPSRelation V1.7.1 [R1 build 2006/02/13-15:43 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 32760
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Adding patches for Redland bugfixes
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Better logs for Redland graphs
+
+*******************************************
+** CPSRelation V1.7.0 [R1 build 2006/02/01-18:14 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 32507
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Redland graph: added possibility to give an object with None value in a list
+  of triples to delete.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.6.0 [R1 build 2006/01/23-17:30 by fermigier]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 31976
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Better handling of import errors
+
+*******************************************
+** CPSRelation V1.5.1 [R1 build 2005/11/29-18:15 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 30081
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Serialization to string optimization
+- Better handling of rdflib import errors
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.5.0 [R1 build 2005/11/10-16:12 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 29454
+Requires:
+~~~~~~~~~
+- rdflib version >= 2.2.1
+New features:
+~~~~~~~~~~~~~
+- Added API to get the list of (predicate, object) tuples for a node,
+  e.g. results of a (node, *, *) query, and the list of (subject, predicate)
+  tuples, e.g results of a (*, *, object) query.
+- Added a printAllRelations method on graphs, to make the difference between
+  a print of all relations, and a dump of all relations using listAllRelations.
+- Object serialization: Added possibility to get a graph from an rdf/xml file,
+  not only from a list of triples.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- rdflib graphs: upgraded to latest rdflib versions
+
+*******************************************
+** CPSRelation V1.4.0 [R1 build 2005/10/18-20:27 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 28408
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Now possible to get graph drawings using pydot.
+- Redland graphs can now use a MySQL backend.
+Bug fixes:
+~~~~~~~~~~
+- Serializations presented rdf binding twice if it was given in serialization
+  bindings.
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.3.0 [R1 build 2005/10/13-07:17 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 28232
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Now possible to serialize from triples or a graph, instead of having to
+  specify an object and a serializer.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.2.1 [R1 build 2005/10/07-20:02 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 28081
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- Made graph deletion more robust
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Code cleaning
+
+*******************************************
+** CPSRelation V1.2.0 [R1 build 2005/09/23-18:04 by madarche]
+** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 27554
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Adding rdflib and Redland RDF frameworks support. Relations created using the
+  old code will be broken as no compatibility could be kept.
+- Adding a serializer tool to serialize objects given a TAL Expression. RDF/XML
+  serialization currently relies on a Redland serializer.
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- 
+
+*******************************************
+** CPSRelation V1.1.0 [R1 build 2005/03/24-19:33 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- adding method to remove a given uid from all the relations (useful when
+  deleting an object for instance)
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- adding a zmi template to view relations held in a given relation
+
+*******************************************
+** CPSRelation V1.0.1 [R1 build 2005/01/31-10:23 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+- inverse id was required
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+
+*******************************************
+** CPSRelation V1.0.0 [R1 build 2005/01/06-18:09 by anahide]
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+-
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+-
+

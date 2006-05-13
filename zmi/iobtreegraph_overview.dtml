@@ -1,0 +1,24 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<h3>IOBTree Graph</h3>
+
+<p>
+  An IOBtree graph is a simple structure that manages several IOBTree
+  objects storing relations between an integer and a tuple of integers.
+</p>
+
+<p>
+  IOBtrees represent labeled relations, and each IOBtree has to declare its
+  inverse relation for optimization purposes. Note than a relation can be
+  its own inverse.
+</p>
+
+<p>
+  This system is the first relation system that was used in CPS. It is
+  useful to store relations between CPS documents, using their docid in the
+  repository as unique integer identifiers.
+</p>
+
+<dtml-var manage_page_footer>
+

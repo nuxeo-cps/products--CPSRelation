@@ -1,0 +1,72 @@
+<dtml-var manage_page_header>
+<dtml-var manage_tabs>
+
+<h3> Relation </h3>
+
+<p>
+  A relation is labeled and holds relations between objects uids.
+  It also knows about its inverse relation.
+</p>
+
+
+<p>
+A labeled relation is identified by its id, and holds its inverse labeled
+relation id, as well as the table holding relations between objects.
+</p>
+
+<p>
+The inverse labeled relation is mandatory, it is used to facilitate tables
+updating.
+</p>
+
+<p>
+For instance, we could have the following labeled relations: 'hasPart', and
+its inverse 'isPartOf'.
+</p>
+
+<p>
+Relation 'hasPart' could hold the following table:
+<pre>
+uid1 -> (uid2, uid3)
+</pre>
+</p>
+
+<p>
+Relation 'isPartOf' would then hold the following table:
+<pre>
+uid2 -> (uid1,)
+uid3 -> (uid1,)
+</pre>
+</p>
+
+<p>
+This means that object identified by uid1 has parts uid2 and uid3.
+Objects identified by uid2 and uid3 are parts of uid1.
+</p>
+
+<p>
+uids are integers, and related objects are tuples of uids.
+</p>
+
+<p>
+When a relation is added/removed from a table, the inverse table is also
+updated.
+</p>
+
+<p>
+If another labeled relation is added to the relations tool, for instance
+'hasReference' and 'isReferenceOf', we would then have 4 tables.
+</p>
+
+
+<h4>Relation API</h4>
+
+<p>
+The relation methods include the following features:<br>
+- get its inverse relation<br>
+- add a relation between two objects (and update the inverse table)<br>
+- delete a relation between two objects (and update the inverse table)<br>
+- remove all the relations for a given object (and update the inverse table)<br>
+- get all the relations for a given object
+- ...
+</p>

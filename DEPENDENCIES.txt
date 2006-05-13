@@ -1,0 +1,6 @@
+# $Id$
+
+CMF
+CPSUtil
+
+# Redland with python bindings to be able to use RedlandGraph

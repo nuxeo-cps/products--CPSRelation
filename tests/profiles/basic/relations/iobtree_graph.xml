@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<object name="iobtree_graph" meta_type="IOBTree Graph">
+ <relation name="hasPart" meta_type="IOBTree Relation">
+  <property name="prefix">cps</property>
+  <property name="subject_prefix">docid</property>
+  <property name="object_prefix">docid</property>
+ </relation>
+</object>

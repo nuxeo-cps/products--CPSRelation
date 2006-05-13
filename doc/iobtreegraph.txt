@@ -1,0 +1,68 @@
+=============
+IOBTree graph
+=============
+
+$Id$
+
+Authors:
+
+- Anahide Tchertchian (at@nuxeo.com)
+
+
+IOBTree graphs
+--------------
+
+IOBTree graphs manage IOBTree relations. IOBTree relations are objects
+managing IOBTrees stroing the actual relations.
+
+
+IOBTree relations
+-----------------
+
+A new labeled relation can be added to an IOBtree graph.
+
+A labeled relation holds a table with actual relations between object uids.
+It also knows about its inverse relation.
+
+A labeled relation is identified by its id, and holds its inverse labeled
+relation id, as well as the table holding relations between objects.
+
+The inverse labeled relation is mandatory, it is used to facilitate tables
+updating.
+
+For instance, we could have the following labeled relations 'hasPart', and
+its inverse 'isPartOf'.
+
+Relation 'hasPart' could hold the following table::
+
+         uid1 -> (uid2, uid3)
+
+Relation 'isPartOf' would then hold the following table::
+
+         uid2 -> (uid1,)
+         uid3 -> (uid1,)
+
+This means that object identified by uid1 has parts uid2 and uid3.
+Objects identified by uid2 and uid3 are parts of uid1.
+
+uids are integers, and related objects are tuples of uids.
+
+When a relation is added/removed from a table, the inverse table is also
+updated.
+
+If another labeled relation is added to the relations tool, for instance
+'hasReference' and 'isReferenceOf', we would then have 4 tables.
+
+A labeled relation can also be its own inverse.
+
+
+IOBtree relation API
+--------------------
+
+The relation methods include the following features:
+
+- get its inverse relation
+- add a relation between two objects (and update the inverse table)
+- delete a relation between two objects (and update the inverse table)
+- remove all the relations for a given object (and update the inverse table)
+- get all the relations for a given object
