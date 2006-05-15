@@ -56,7 +56,7 @@ class FakeProxy(Folder):
         self.docid = docid
         self.revision = revision
 
-    def getDocId(self):
+    def getDocid(self):
         return self.docid
 
     def getRevision(self):

@@ -227,7 +227,7 @@ ResourceRegistry.register(RpathResource)
 def getProxyVersionResource(proxy):
     """return a VersionResource from a proxy
     """
-    docid = proxy.getDocId()
+    docid = proxy.getDocid()
     revision = proxy.getRevision()
     return VersionResource(docid=docid, revision=revision)
 
@@ -237,7 +237,7 @@ def getProxyVersionResource(proxy):
 def getProxyVersionHistoryResource(proxy):
     """return a VersionHistoryResource from a proxy
     """
-    docid = proxy.getDocId()
+    docid = proxy.getDocid()
     return VersionHistoryResource(docid)
 
 

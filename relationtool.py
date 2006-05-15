@@ -107,7 +107,10 @@ class RelationTool(UniqueObject, CMFBTreeFolder):
         except KeyError:
             pass
         else:
-            graph.clear()
+            try:
+                graph.clear()
+            except AttributeError:
+                pass
         return CMFBTreeFolder._delOb(self, graph_id)
 
     security.declareProtected(ManagePortal, 'getGraph')
