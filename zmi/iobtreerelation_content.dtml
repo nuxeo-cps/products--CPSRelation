@@ -27,9 +27,6 @@
 <table width="100%" cellspacing="0" cellpadding="2" border="0">
 <tr class="list-header">
   <td width="15%" align="left">
-    <div class="list-item">Selection</div>
-  </td>
-  <td width="15%" align="left">
     <div class="list-item">Subject</div>
   </td>
   <td width="15%" align="left">
@@ -45,12 +42,12 @@
   </dtml-if>
     <td align="left">
       <div class="list-item">
-        <dtml-var "key[0]">
+        <dtml-var "key.subject.uri">
       </div>
     </td>
     <td align="left">
       <div class="list-item">
-        <dtml-var "key[1]">
+        <dtml-var "key.object.uri">
       </div>
     </td>
   </tr>

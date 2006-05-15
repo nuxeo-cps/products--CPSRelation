@@ -49,13 +49,13 @@
   <tr class="row-hilite">
   </dtml-if>
     <td align="left" valign="top">
-      <div class="list-item"><dtml-var "key[0]"></div>
+      <div class="list-item"><dtml-var "str(key.subject)[1:-1]"></div>
     </td>
     <td align="left" valign="top">
-      <div class="list-item"><dtml-var "key[1]"></div>
+      <div class="list-item"><dtml-var "str(key.predicate)[1:-1]"></div>
     </td>
     <td align="left" valign="top">
-      <div class="list-item"><dtml-var "key[2]"></div>
+      <div class="list-item"><dtml-var "str(key.object)[1:-1]"></div>
     </td>
   </tr>
   </dtml-let>
