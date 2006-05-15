@@ -439,31 +439,28 @@ class RedlandGraph(UniqueObject, PortalFolder):
         return objects
 
 
-    security.declareProtected(View, '__contains__')
-    def __contains__(self, statement):
+    security.declareProtected(View, 'hasStatement')
+    def hasStatement(self, statement):
         """Return True if given IStatement is in the graph
 
         statement can use None nodes as wild cards.
         """
         rdf_graph = self._getGraph()
         rstatement = self._getRedlandStatement(statement)
+        # FIXME AT: buggy with None values
         return rstatement in rdf_graph
 
 
-    security.declareProtected(View, 'containsResource')
-    def containsResource(self, node):
+    security.declareProtected(View, 'hasResource')
+    def hasResource(self, node):
         """Return True if given node appears in any statement of the graph.
         """
         # XXX no direct API to do that in Redland...
-        # XXX AT: strange acquisition problem: the graph __contains__ method is
-        # not found
-        from Acquisition import aq_base
-        base_graph = aq_base(self)
-        if Statement(node, None, None) in base_graph:
+        if self.hasStatement(Statement(node, None, None)):
             return True
-        if Statement(None, node, None) in base_graph:
+        if self.hasStatement(Statement(None, node, None)):
             return True
-        if Statement(None, None, node) in base_graph:
+        if self.hasStatement(Statement(None, None, node)):
             return True
         return False
 

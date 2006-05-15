@@ -176,16 +176,16 @@ class TestIOBTreeGraph(IOBTreeGraphTestCase):
         statement = Statement(PrefixedResource('docid', '777'),
                               PrefixedResource('cps', 'hasPart'),
                               PrefixedResource('docid', '666'))
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
         self.graph.add([statement])
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
 
 
     def test_remove(self):
         statement = self.test_relations[0]
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
         self.graph.remove([statement])
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
 
 
     def test_getStatements(self):
@@ -226,17 +226,27 @@ class TestIOBTreeGraph(IOBTreeGraphTestCase):
                          objects, keep_order=False)
 
 
-    def test__contains__(self):
+    def test_hasStatement(self):
         statement = self.test_relations[0]
         self.assertEqual(statement in self.graph.getStatements(),
                          True)
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
         statement = Statement(PrefixedResource('docid', '12345'),
                               PrefixedResource('cps', 'hasPart'),
                               PrefixedResource('foo', 'bar'))
         self.assertEqual(statement in self.graph.getStatements(),
                          False)
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
+
+
+    def test_hasResource(self):
+        self.assertEqual(self.graph.hasResource(
+            PrefixedResource('docid', '12345')),
+                         True)
+        self.assertEqual(self.graph.hasResource(
+            PrefixedResource('docid', '1111')),
+                         False)
+
 
 
     def test_clear(self):

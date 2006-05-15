@@ -255,18 +255,18 @@ class TestRedlandGraph(RedlandGraphTestCase):
         statement = Statement(Resource('http://example.org'),
                               PrefixedResource('cps', 'title'),
                               Literal('My example'))
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
         self.graph.add([statement])
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
 
 
     def test_remove(self):
         statement = Statement(PrefixedResource('cps', 'cps'),
                               PrefixedResource('cps', 'title'),
                               Literal('CPS Project'))
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
         self.graph.remove([statement])
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
 
 
     def test_getStatements(self):
@@ -334,19 +334,27 @@ class TestRedlandGraph(RedlandGraphTestCase):
                          [])
 
 
-    def test__contains__(self):
+    def test_hasStatement(self):
         statement = Statement(PrefixedResource('cps', 'cps'),
                               PrefixedResource('cps', 'title'),
                               Literal('CPS Project'))
         self.assertEqual(statement in self.graph.getStatements(),
                          True)
-        self.assertEqual(statement in self.graph, True)
+        self.assertEqual(self.graph.hasStatement(statement), True)
         statement = Statement(PrefixedResource('cps', 'cps3'),
                               PrefixedResource('cps', 'title'),
                               Literal('CPS Project'))
         self.assertEqual(statement in self.graph.getStatements(),
                          False)
-        self.assertEqual(statement in self.graph, False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
+
+
+    def test_hasResource(self):
+        self.assertEqual(self.graph.hasResource(PrefixedResource('cps', 'cps')),
+                         True)
+        # FIME AT: buggy
+        #self.assertEqual(self.graph.hasResource(PrefixedResource('cps', 'cps3')),
+        #                 False)
 
 
     def test_clear(self):

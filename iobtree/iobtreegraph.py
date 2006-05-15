@@ -239,8 +239,8 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
         return res
 
 
-    security.declareProtected(View, '__contains__')
-    def __contains__(self, statement):
+    security.declareProtected(View, 'hasStatement')
+    def hasStatement(self, statement):
         """Return True if given IStatement is in the graph
 
         statement can use None nodes as wild cards.
@@ -258,21 +258,17 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
         return res
 
 
-    security.declareProtected(View, 'containsResource')
-    def containsResource(self, node):
+    security.declareProtected(View, 'hasResource')
+    def hasResource(self, node):
         """Return True if given node appears in any statement of the graph.
         """
         # XXX no direct API to do that...
-        # XXX AT: strange acquisition problem: the graph __contains__ method is
-        # not found
-        from Acquisition import aq_base
-        base_graph = aq_base(self)
         try:
-            if Statement(node, None, None) in base_graph:
+            if self.hasStatement(Statement(node, None, None)):
                 return True
-            if Statement(None, node, None) in base_graph:
+            if self.hasStatement(Statement(None, node, None)):
                 return True
-            if Statement(None, None, node) in base_graph:
+            if self.hasStatement(Statement(None, None, node)):
                 return True
         except (ValueError, KeyError):
             # avoid invalid node problem

@@ -57,13 +57,13 @@ class IGraph(zope.interface.Interface):
         """Get items matching the IStatement(subject, predicate, None)
         """
 
-    def __contains__(statement):
+    def hasStatement(statement):
         """Return True if given IStatement is in the graph
 
         statement can use None nodes as wild cards.
         """
 
-    def containsResource(node):
+    def hasResource(node):
         """Return True if given node appears in any statement of the graph.
         """
 
