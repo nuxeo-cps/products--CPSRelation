@@ -82,3 +82,12 @@ class Statement:
     def __cmp__(self, other):
         # useful for list of statements sorting
         return cmp(str(self), str(other))
+
+    def __nonzero__(self):
+        if (self.subject is None
+            and self.predicate is None
+            and self.object is None):
+            res = False
+        else:
+            res = True
+        return res

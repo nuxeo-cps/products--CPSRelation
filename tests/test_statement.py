@@ -55,6 +55,15 @@ class TestStatement(unittest.TestCase):
         self.assertNotEqual(st, other_st)
 
 
+    def test__nonzero__(self):
+        st = Statement(Resource('c'), Resource('p'), Literal('s'))
+        self.assertEqual(not not st, True)
+        st = Statement(Resource('c'), Resource('p'), None)
+        self.assertEqual(not not st, True)
+        st = Statement(None, None, None)
+        self.assertEqual(not not st, False)
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestStatement))

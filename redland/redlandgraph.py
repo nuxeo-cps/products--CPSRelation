@@ -446,9 +446,20 @@ class RedlandGraph(UniqueObject, PortalFolder):
         statement can use None nodes as wild cards.
         """
         rdf_graph = self._getGraph()
-        rstatement = self._getRedlandStatement(statement)
-        # FIXME AT: buggy with None values
-        return rstatement in rdf_graph
+        res = False
+        if not statement:
+            # optim: is graph empty?
+            if len(self) > 0:
+                res = True
+        elif (statement.subject is not None
+              and statement.predicate is not None
+              and statement.object is not None):
+            rstatement = self._getRedlandStatement(statement)
+            res = rstatement in rdf_graph
+        else:
+            if self.getStatements(statement):
+                res = True
+        return res
 
 
     security.declareProtected(View, 'hasResource')

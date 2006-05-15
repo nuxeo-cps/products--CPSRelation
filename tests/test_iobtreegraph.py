@@ -231,11 +231,19 @@ class TestIOBTreeGraph(IOBTreeGraphTestCase):
         self.assertEqual(statement in self.graph.getStatements(),
                          True)
         self.assertEqual(self.graph.hasStatement(statement), True)
+        # None value
+        statement.object = None
+        self.assertEqual(self.graph.hasStatement(statement), True)
         statement = Statement(PrefixedResource('docid', '12345'),
                               PrefixedResource('cps', 'hasPart'),
                               PrefixedResource('foo', 'bar'))
         self.assertEqual(statement in self.graph.getStatements(),
                          False)
+        self.assertEqual(self.graph.hasStatement(statement), False)
+        # graph is not empty
+        statement = Statement(None, None, None)
+        self.assertEqual(self.graph.hasStatement(statement), True)
+        self.graph.clear()
         self.assertEqual(self.graph.hasStatement(statement), False)
 
 

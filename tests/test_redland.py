@@ -341,20 +341,29 @@ class TestRedlandGraph(RedlandGraphTestCase):
         self.assertEqual(statement in self.graph.getStatements(),
                          True)
         self.assertEqual(self.graph.hasStatement(statement), True)
+        # None value
+        statement = Statement(PrefixedResource('cps', 'cps'),
+                              PrefixedResource('cps', 'title'),
+                              None)
+        self.assertEqual(self.graph.hasStatement(statement), True)
         statement = Statement(PrefixedResource('cps', 'cps3'),
                               PrefixedResource('cps', 'title'),
                               Literal('CPS Project'))
         self.assertEqual(statement in self.graph.getStatements(),
                          False)
         self.assertEqual(self.graph.hasStatement(statement), False)
+        # graph is not empty
+        statement = Statement(None, None, None)
+        self.assertEqual(self.graph.hasStatement(statement), True)
+        self.graph.clear()
+        self.assertEqual(self.graph.hasStatement(statement), False)
 
 
     def test_hasResource(self):
         self.assertEqual(self.graph.hasResource(PrefixedResource('cps', 'cps')),
                          True)
-        # FIME AT: buggy
-        #self.assertEqual(self.graph.hasResource(PrefixedResource('cps', 'cps3')),
-        #                 False)
+        self.assertEqual(self.graph.hasResource(PrefixedResource('cps', 'cps3')),
+                         False)
 
 
     def test_clear(self):
