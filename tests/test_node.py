@@ -37,6 +37,8 @@ from Products.CPSRelation.interfaces import ILiteral
 from Products.CPSRelation.interfaces import IVersionResource
 from Products.CPSRelation.interfaces import IVersionHistoryResource
 from Products.CPSRelation.interfaces import IRpathResource
+from Products.CPSRelation.interfaces import IStatementResource
+from Products.CPSRelation.interfaces import IStatement
 
 from Products.CPSRelation.node import Resource
 from Products.CPSRelation.node import PrefixedResource
@@ -45,6 +47,8 @@ from Products.CPSRelation.node import Literal
 from Products.CPSRelation.node import VersionResource
 from Products.CPSRelation.node import VersionHistoryResource
 from Products.CPSRelation.node import RpathResource
+from Products.CPSRelation.node import StatementResource
+from Products.CPSRelation.statement import Statement
 
 from Products.CPSRelation.tests.CPSRelationTestCase import CPSRelationTestCase
 
@@ -199,6 +203,26 @@ class TestNodeExtended(unittest.TestCase):
         self.assertNotEqual(hash(resource), hash(other_resource))
 
 
+    def test_StatementResource(self):
+        zope.interface.verify.verifyClass(INode, StatementResource)
+        zope.interface.verify.verifyClass(IResource, StatementResource)
+        zope.interface.verify.verifyClass(IPrefixedResource,
+                                          StatementResource)
+        zope.interface.verify.verifyClass(IStatementResource,
+                                          StatementResource)
+        uid = "35ccdc9a89a48d48446691e58ceec09f3b49ca6"
+        resource = StatementResource(uid)
+        self.assertEqual(resource.uri, "statement:" + uid)
+        self.assertEqual(resource.prefix, "statement")
+        self.assertEqual(resource.localname, uid)
+        same_resource = StatementResource(uid)
+        other_resource = StatementResource("hahaha")
+        self.assertEqual(resource, same_resource)
+        self.assertEqual(hash(resource), hash(same_resource))
+        self.assertNotEqual(resource, other_resource)
+        self.assertNotEqual(hash(resource), hash(other_resource))
+
+
 class TestNodeAdapters(CPSRelationTestCase):
 
     def test_VersionResource(self):
@@ -223,6 +247,16 @@ class TestNodeAdapters(CPSRelationTestCase):
         self.assertEqual(resource.localname, "workspaces/proxy1")
         self.assertEqual(resource.rpath, "workspaces/proxy1")
 
+    def test_StatementResource(self):
+        statement = Statement(IVersionHistoryResource(self.proxy1),
+                              PrefixedResource('cps', 'hasTitle'),
+                              Literal("Héhéhé"))
+        resource = IStatementResource(statement)
+        self.assertEqual(resource.uri,
+                         "statement:44be59871ae3f1d9bda12e3db9a44704ced22869")
+        self.assertEqual(resource.prefix, "statement")
+        self.assertEqual(resource.localname,
+                         "44be59871ae3f1d9bda12e3db9a44704ced22869")
 
 def test_suite():
     suite = unittest.TestSuite()

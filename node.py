@@ -28,18 +28,22 @@ to be created using adapters.
 import zope.interface
 import zope.component
 
+import sha
+
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSCore.interfaces import ICPSProxy
 
 from Products.CPSRelation.interfaces import INode
-from Products.CPSRelation.interfaces import IResource
-from Products.CPSRelation.interfaces import IPrefixedResource
 from Products.CPSRelation.interfaces import IBlank
 from Products.CPSRelation.interfaces import ILiteral
+from Products.CPSRelation.interfaces import IResource
+from Products.CPSRelation.interfaces import IStatement
+from Products.CPSRelation.interfaces import IPrefixedResource
 from Products.CPSRelation.interfaces import IVersionResource
 from Products.CPSRelation.interfaces import IVersionHistoryResource
 from Products.CPSRelation.interfaces import IRpathResource
+from Products.CPSRelation.interfaces import IStatementResource
 
 from Products.CPSRelation.resourceregistry import ResourceRegistry
 
@@ -220,6 +224,24 @@ class RpathResource(PrefixedResource):
 ResourceRegistry.register(RpathResource)
 
 
+# reification attempt
+
+class StatementResource(PrefixedResource):
+    """Statement Resource
+    """
+
+    zope.interface.implements(IStatementResource)
+    prefix = 'statement'
+
+    def __init__(self, localname):
+        self.rpath = localname
+        self.localname = self.rpath
+        self.uri = self.prefix + ':' + self.localname
+
+ResourceRegistry.register(RpathResource)
+
+
+
 # basic resource adapters
 
 @zope.component.adapter(ICPSProxy)
@@ -251,3 +273,21 @@ def getProxyRpathResource(proxy):
     # query the url tool to get the relative path
     rpath = utool.getRpath(proxy)
     return RpathResource(rpath)
+
+
+@zope.component.adapter(IStatement)
+@zope.interface.implementer(IStatementResource)
+def getStatementResource(statement):
+    """return an IStatementResource from an IStatement (reification)
+    """
+    # use sha to identify the statement...
+    if not statement:
+        # null statement or None value
+        res = None
+    else:
+        statement_id = "{%s, %s, %s}"%(statement.subject,
+                                       statement.predicate,
+                                       statement.object)
+        uid = sha.new(statement_id).hexdigest()
+        res = StatementResource(uid)
+    return res

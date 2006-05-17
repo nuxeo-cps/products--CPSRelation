@@ -42,6 +42,8 @@ from _INode import ILiteral
 from _INode import IVersionResource
 from _INode import IVersionHistoryResource
 from _INode import IRpathResource
+# reification attemps
+from _INode import IStatementResource
 
 
 class IObjectSerializerTool(Interface):

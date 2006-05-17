@@ -45,5 +45,6 @@
   <adapter factory=".node.getProxyVersionResource" />
   <adapter factory=".node.getProxyVersionHistoryResource" />
   <adapter factory=".node.getProxyRpathResource" />
+  <adapter factory=".node.getStatementResource" />
 
 </configure>

@@ -85,3 +85,9 @@ class IRpathResource(IPrefixedResource):
     """
 
     rpath = Attribute("Relative path")
+
+
+class IStatementResource(IPrefixedResource):
+    """Resource representing a statement (reification)
+    """
+
