@@ -238,7 +238,7 @@ class StatementResource(PrefixedResource):
         self.localname = self.rpath
         self.uri = self.prefix + ':' + self.localname
 
-ResourceRegistry.register(RpathResource)
+ResourceRegistry.register(StatementResource)
 
 
 
