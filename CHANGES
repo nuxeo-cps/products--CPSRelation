@@ -3,11 +3,10 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
-- Added an abstraction level
+-
 Bug fixes:
 ~~~~~~~~~~
 -
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
-- Removing graphs using rdflib
-- Cleaning the relation tool api
+-

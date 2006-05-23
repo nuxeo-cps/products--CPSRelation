@@ -1,4 +1,21 @@
 *******************************************
+** CPSRelation V2.0.0-abstraction [R1 build 2006/05/23-20:27 by anahide]
+** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/branches/abstraction Revision: 45912
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Added an abstraction level
+Bug fixes:
+~~~~~~~~~~
+-
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Removing graphs using rdflib
+- Cleaning the relation tool api
+
+*******************************************
 ** CPSRelation V1.9.4 [R1 build 2006/04/24-15:16 by anahide]
 ** SVN URL: https://svn.nuxeo.org/pub/CPSRelation/trunk Revision: 44891
 Requires:
