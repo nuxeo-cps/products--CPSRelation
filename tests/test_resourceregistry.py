@@ -46,7 +46,7 @@ class TestResourceRegistry(unittest.TestCase):
     def test_listResourcePrefixes(self):
         res = list(ResourceRegistry.listResourcePrefixes())
         res.sort()
-        self.assertEquals(res, ['docid', 'rpath', 'uuid'])
+        self.assertEquals(res, ['docid', 'rpath', 'statement', 'uuid'])
 
     def test_register(self):
         ResourceRegistry.register(DummyResource)

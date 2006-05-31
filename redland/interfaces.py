@@ -31,3 +31,11 @@ class IRedlandGraph(IGraph):
     def getNamespaceBindings():
         """get the prefix/namespace dictionnary
         """
+
+    def _getRedlandStatement(statement):
+        """Get the Redland statement representing given IStatement
+        """
+
+    def _getCPSStatement(rstatement):
+        """Get the IStatement representing given Redland statement
+        """

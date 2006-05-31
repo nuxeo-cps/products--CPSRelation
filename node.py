@@ -28,8 +28,6 @@ to be created using adapters.
 import zope.interface
 import zope.component
 
-import sha
-
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSCore.interfaces import ICPSProxy
@@ -273,21 +271,3 @@ def getProxyRpathResource(proxy):
     # query the url tool to get the relative path
     rpath = utool.getRpath(proxy)
     return RpathResource(rpath)
-
-
-@zope.component.adapter(IStatement)
-@zope.interface.implementer(IStatementResource)
-def getStatementResource(statement):
-    """return an IStatementResource from an IStatement (reification)
-    """
-    # use sha to identify the statement...
-    if not statement:
-        # null statement or None value
-        res = None
-    else:
-        statement_id = "{%s, %s, %s}"%(statement.subject,
-                                       statement.predicate,
-                                       statement.object)
-        uid = sha.new(statement_id).hexdigest()
-        res = StatementResource(uid)
-    return res

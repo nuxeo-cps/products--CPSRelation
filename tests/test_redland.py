@@ -51,6 +51,7 @@ import zope.interface
 from Products.CPSRelation.interfaces import IVersionResource
 from Products.CPSRelation.interfaces import IVersionHistoryResource
 from Products.CPSRelation.interfaces import IRpathResource
+from Products.CPSRelation.interfaces import IStatementResource
 from Products.CPSRelation.statement import Statement
 from Products.CPSRelation.node import Resource
 from Products.CPSRelation.node import PrefixedResource
@@ -640,6 +641,29 @@ again</cps:dummy>
 </rdf:RDF>
 """
         self.assertEquals(graph.write(), expected)
+
+
+    def test_StatementResource(self):
+        statement = Statement(IVersionHistoryResource(self.proxy1),
+                              PrefixedResource('cps', 'hasTitle'),
+                              Literal("Héhéhé"))
+        resource = zope.component.queryMultiAdapter(
+            (statement, self.graph),
+            IStatementResource)
+        self.assertEqual(resource.uri,
+                         "statement:99bcb5eb870cde82f23dd96dd35d570b0b237ad4")
+        self.assertEqual(resource.prefix, "statement")
+        self.assertEqual(resource.localname,
+                         "99bcb5eb870cde82f23dd96dd35d570b0b237ad4")
+
+        # test resource is the same even if given statement is different
+        other_statement = Statement(PrefixedResource('docid', '12345'),
+                                    PrefixedResource('cps', 'hasTitle'),
+                                    Literal("Héhéhé"))
+        other_resource = zope.component.queryMultiAdapter(
+            (other_statement, self.graph),
+            IStatementResource)
+        self.assertEqual(resource, other_resource)
 
 
 def test_suite():

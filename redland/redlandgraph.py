@@ -60,6 +60,7 @@ import os.path
 import tempfile
 import string
 import logging
+import sha
 
 import zope.interface
 import zope.component
@@ -76,11 +77,14 @@ from Products.CPSRelation.interfaces import IResource
 from Products.CPSRelation.interfaces import IPrefixedResource
 from Products.CPSRelation.interfaces import IBlank
 from Products.CPSRelation.interfaces import ILiteral
+from Products.CPSRelation.interfaces import IStatementResource
+from Products.CPSRelation.interfaces import IStatement
 from Products.CPSRelation.resourceregistry import ResourceRegistry
 from Products.CPSRelation.node import Resource
 from Products.CPSRelation.node import PrefixedResource
 from Products.CPSRelation.node import Literal
 from Products.CPSRelation.node import Blank
+from Products.CPSRelation.node import StatementResource
 from Products.CPSRelation.statement import Statement
 
 # graph
@@ -645,6 +649,32 @@ InitializeClass(RedlandGraph)
 # Register to the graph registry
 GraphRegistry.register(RedlandGraph)
 
+
+# reification attempt
+@zope.component.adapter(IStatement, IRedlandGraph)
+@zope.interface.implementer(IStatementResource)
+def getStatementResource(statement, graph):
+    """Return an IStatementResource from an IStatement (reification) and an
+    IRedlandGraph
+
+    The statement resource created may depend on the graph internal
+    representation, that's why this is a multi adapter.
+    """
+    # convert statement so that it does not depend on the graph internal
+    # representation
+    redland_statement = graph._getRedlandStatement(statement)
+    statement = graph._getCPSStatement(redland_statement)
+    # use sha to identify the statement...
+    if not statement:
+        # null statement or None value
+        res = None
+    else:
+        statement_id = "{%s, %s, %s}"%(statement.subject,
+                                       statement.predicate,
+                                       statement.object)
+        uid = sha.new(statement_id).hexdigest()
+        res = StatementResource(uid)
+    return res
 
 
 #

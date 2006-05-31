@@ -247,16 +247,6 @@ class TestNodeAdapters(CPSRelationTestCase):
         self.assertEqual(resource.localname, "workspaces/proxy1")
         self.assertEqual(resource.rpath, "workspaces/proxy1")
 
-    def test_StatementResource(self):
-        statement = Statement(IVersionHistoryResource(self.proxy1),
-                              PrefixedResource('cps', 'hasTitle'),
-                              Literal("Héhéhé"))
-        resource = IStatementResource(statement)
-        self.assertEqual(resource.uri,
-                         "statement:44be59871ae3f1d9bda12e3db9a44704ced22869")
-        self.assertEqual(resource.prefix, "statement")
-        self.assertEqual(resource.localname,
-                         "44be59871ae3f1d9bda12e3db9a44704ced22869")
 
 def test_suite():
     suite = unittest.TestSuite()

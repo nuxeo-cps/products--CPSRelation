@@ -45,6 +45,11 @@
   <adapter factory=".node.getProxyVersionResource" />
   <adapter factory=".node.getProxyVersionHistoryResource" />
   <adapter factory=".node.getProxyRpathResource" />
-  <adapter factory=".node.getStatementResource" />
+
+  <!-- specific graphs configurations -->
+
+  <include
+   zcml:condition="installed RDF"
+   file="redland/configure.zcml"/>
 
 </configure>
