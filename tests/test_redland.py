@@ -47,6 +47,7 @@ import os
 import unittest
 
 import zope.interface
+import zope.component
 
 from Products.CPSRelation.interfaces import IVersionResource
 from Products.CPSRelation.interfaces import IVersionHistoryResource
