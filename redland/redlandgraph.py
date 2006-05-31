@@ -143,6 +143,10 @@ class RedlandGraph(UniqueObject, PortalFolder):
         {'id': 'mysql_options', 'type': 'string', 'mode': 'w',
          'label': "mysql connection parameters (for mysql backend)"
          },
+        # add optional mysql database name; defaults to the graph id
+        {'id': 'mysql_database', 'type': 'string', 'mode': 'w',
+         'label': "mysql database name (for mysql backend)"
+         },
         )
     supported_backends = [
         'memory',
@@ -155,6 +159,7 @@ class RedlandGraph(UniqueObject, PortalFolder):
     adapter_bindings = ()
     bdb_path = ''
     mysql_options = ''
+    mysql_database = ''
 
     #
     # API
@@ -217,12 +222,13 @@ class RedlandGraph(UniqueObject, PortalFolder):
                 self._v_storage = storage
         elif self.backend == 'mysql':
             storage = getattr(self, '_v_storage', None)
+            database_id = self.mysql_database or self.id
             if storage is None:
                 self.logger.debug("_getGraph: rebuilding mysql storage")
-                options = self.mysql_options + ",database='%s'"%self.id
+                options = self.mysql_options + ",database='%s'"%database_id
                 try:
                     storage = RDF.Storage(storage_name="mysql",
-                                          name=self.id,
+                                          name=database_id,
                                           options_string=options)
                 except Exception, err:
                     # XXX catching RDF.RedlandError is unefficient, because
@@ -238,7 +244,7 @@ class RedlandGraph(UniqueObject, PortalFolder):
                         self.logger.debug("_getGraph: creating mysql tables")
                         options = "new='yes'," + options
                         storage = RDF.Storage(storage_name="mysql",
-                                              name=self.id,
+                                              name=database_id,
                                               options_string=options)
                 self._v_storage = storage
         else:

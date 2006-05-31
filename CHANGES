@@ -10,4 +10,4 @@ Bug fixes:
   representation
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
--
+- Redland graphs: database name with mysql backend can be specified in ZMI.
