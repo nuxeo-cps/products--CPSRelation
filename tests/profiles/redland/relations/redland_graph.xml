@@ -8,4 +8,5 @@
  <property name="bdb_path"></property>
  <property
     name="mysql_options">"host='localhost',port=3306,user='test',password='pass'"</property>
+ <property name="mysql_database">db_name</property>
 </object>

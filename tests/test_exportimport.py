@@ -146,7 +146,8 @@ class ExportImportTest(ExportImportTestCase):
                 ('namespace_bindings', bindings),
                 ('bdb_path', ''),
                 # FIXME change that string into a readable one
-               ('mysql_options', '"host=\'localhost\',port=3306,user=\'test\',password=\'pass\'"'),
+                ('mysql_options', '"host=\'localhost\',port=3306,user=\'test\',password=\'pass\'"'),
+                ('mysql_database', 'db_name'),
                 ]
             self.assertEquals(graph.meta_type, 'Redland Graph')
             self.assertEquals(graph.propertyItems(), property_items)
