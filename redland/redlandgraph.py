@@ -500,6 +500,7 @@ class RedlandGraph(UniqueObject, PortalFolder):
         for item in items:
             rdf_graph.remove_statement(item)
 
+
     security.declareProtected(View, '__len__')
     def __len__(self):
         """Return the number of statements in the graph
