@@ -38,7 +38,7 @@
     </td>
     <td align="left" valign="top">
       <div class="list-item">
-        <a href="&dtml-key;/manage_main">&dtml-key;</a>
+        <a href="&dtml-key;/manage_workspace">&dtml-key;</a>
       </div>
     </td>
     <td align="left" valign="top">

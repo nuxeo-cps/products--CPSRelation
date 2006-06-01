@@ -359,8 +359,8 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
 
 
     security.declareProtected(ManagePortal, 'manage_editRelations')
-    manage_editRelations = DTMLFile('../zmi/iobtreegraph_content', globals())
-    manage_main = manage_editRelations
+    manage_editRelations = DTMLFile('../zmi/iobtreegraph_content', globals(),
+                                    __name__='manage_workspace')
 
     security.declareProtected(ManagePortal, 'manage_drawing')
     manage_drawing = DTMLFile('../zmi/graph_drawing', globals())

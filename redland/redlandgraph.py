@@ -628,7 +628,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
          },
         ) + PortalFolder.manage_options[3:]
 
-    manage_main = PortalFolder.manage_propertiesForm
+    manage_workspace = PortalFolder.manage_propertiesForm
+    manage_workspace._setName('manage_propertiesForm')
 
     security.declareProtected(ManagePortal, 'manage_editRelations')
     manage_editRelations = DTMLFile('../zmi/rdfgraph_content', globals())
