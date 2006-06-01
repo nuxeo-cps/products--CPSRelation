@@ -11,3 +11,4 @@ Bug fixes:
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Redland graphs: database name with mysql backend can be specified in ZMI.
+- Redland graphs: graph clearing was failing using a MySQL backend.

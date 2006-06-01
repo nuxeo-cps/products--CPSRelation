@@ -496,10 +496,9 @@ class RedlandGraph(UniqueObject, PortalFolder):
         statement = Statement(None, None, None)
         rstatement = self._getRedlandStatement(statement)
         riterator = rdf_graph.find_statements(rstatement)
-        while not riterator.end():
-            rdf_graph.remove_statement(riterator.current())
-            riterator.next()
-
+        items = list(riterator)
+        for item in items:
+            rdf_graph.remove_statement(item)
 
     security.declareProtected(View, '__len__')
     def __len__(self):
