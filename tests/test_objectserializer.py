@@ -111,12 +111,14 @@ class TestObjectSerializer(CPSRelationTestCase):
         inc_expr = """python:[Statement(Resource(getattr(object, 'id')),
                                         PrefixedResource('cps', 'hasTitle'),
                                         Literal('My title')"""
+        # XXX AT: BBB does not work the other way round (CompilerError class
+        # defined twice...)
         try:
-            # Zope 2.10
-            from zope.tales.tales import CompilerError
-        except ImportError:
             # BBB for Zope 2.9
             from Products.PageTemplates.TALES import CompilerError
+        except ImportError:
+            # Zope 2.10
+            from zope.tales.tales import CompilerError
         self.assertRaises(CompilerError,
                           serializer.manage_changeProperties,
                           serialization_expr=inc_expr)
