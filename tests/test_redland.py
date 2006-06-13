@@ -128,6 +128,12 @@ class TestRedlandGraph(RedlandGraphTestCase):
         resource = self.graph._getRedlandNode(Resource('http://example.org'))
         self.assertEqual(resource, RDF.Node(uri_string='http://example.org'))
 
+        resource = self.graph._getRedlandNode(PrefixedResource('cps', 'toto'))
+        self.assertEqual(resource, RDF.Node(uri_string='http://cps-project.org/node/toto'))
+
+        resource = self.graph._getRedlandNode(PrefixedResource('shmurk', 'toto'))
+        self.assertEqual(resource, RDF.Node(uri_string='shmurk:toto'))
+
         blank = self.graph._getRedlandNode(Blank('blank'))
         self.assertEqual(blank, RDF.Node(blank='blank'))
 
@@ -145,6 +151,12 @@ class TestRedlandGraph(RedlandGraphTestCase):
                                                  type="http://example.org"))
         self.assertEqual(lit, RDF.Node(literal="Hoho",
                                        datatype=RDF.Uri("http://example.org")))
+
+        # other typed literal
+        lit = self.graph._getRedlandNode(Literal("2006-06-03 17:38:44",
+                                                 type="date"))
+        self.assertEqual(lit, RDF.Node(literal="2006-06-03 17:38:44",
+                                       datatype=RDF.Uri("date")))
 
 
     def test__getRedlandNode_extended(self):
@@ -189,9 +201,15 @@ class TestRedlandGraph(RedlandGraphTestCase):
         self.assertEqual(lit, Literal("Hoho",
                                       type="http://example.org"))
 
+        # other typed literal
+        lit = self.graph._getCPSNode(RDF.Node(literal="2006-06-03 17:38:44",
+                                              datatype=RDF.Uri("date")))
+        self.assertEqual(lit, Literal("2006-06-03 17:38:44",
+                                      type="date"))
+
 
     def test__getCPSNode_extended(self):
-        # version prefix is known by the graph
+        # version prefix is known by the graph, and resource registry too
         version_uri_string = "http://cps-project.org/uuid/12345__0001"
         version = self.graph._getCPSNode(RDF.Node(uri_string=version_uri_string))
         self.assertEqual(version, IVersionResource(self.proxy1))
