@@ -111,7 +111,12 @@ class TestObjectSerializer(CPSRelationTestCase):
         inc_expr = """python:[Statement(Resource(getattr(object, 'id')),
                                         PrefixedResource('cps', 'hasTitle'),
                                         Literal('My title')"""
-        from Products.PageTemplates.Expressions import CompilerError
+        try:
+            # Zope 2.10
+            from zope.tales.tales import CompilerError
+        except ImportError:
+            # BBB for Zope 2.9
+            from Products.PageTemplates.TALES import CompilerError
         self.assertRaises(CompilerError,
                           serializer.manage_changeProperties,
                           serialization_expr=inc_expr)

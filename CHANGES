@@ -3,7 +3,7 @@ Requires:
 -
 New features:
 ~~~~~~~~~~~~~
--
+- Moving to unicode for literal values
 Bug fixes:
 ~~~~~~~~~~
 - Statement reification attempt did not take care of the graph internal

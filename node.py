@@ -135,13 +135,18 @@ class Literal(BaseNode):
     def __init__(self, value, language=None, type=None):
         """Init for literal node (plain or typed)
 
-        value has to be encoded in iso-8859-15
+        value has to be unicode
         """
         # literal as to be plain or typed, cannot be both
         assert not language or not type
-        if isinstance(value, unicode):
-            # force value to iso-8859-15 here
-            value = value.encode('iso-8859-15', 'ignore')
+        if not isinstance(value, basestring):
+            raise ValueError("Literal value %r is not a string"%(value,))
+        elif isinstance(value, str):
+            try:
+                value = unicode(value, 'ascii')
+            except UnicodeError:
+                raise UnicodeError("Literal value %r is not unicode"%(
+                    value,))
         self.value = value
         self.language = language
         self.type = type
@@ -149,11 +154,11 @@ class Literal(BaseNode):
     def __str__(self):
         name = str(self.__class__)
         if self.type:
-            return "<%s '%s^^%s'>"%(name, self.value, self.type)
+            return "<%s '%r^^%r'>"%(name, self.value, self.type)
         elif self.language:
-            return "<%s '%s@%s'>"%(name, self.value, self.language)
+            return "<%s '%r@%r'>"%(name, self.value, self.language)
         else:
-            return "<%s '%s'>"%(name, self.value,)
+            return "<%s '%r'>"%(name, self.value,)
 
     def __eq__(self, other):
         if (not isinstance(other, self.__class__)

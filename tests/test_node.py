@@ -96,13 +96,13 @@ class TestNodeBasic(unittest.TestCase):
     def test_Literal(self):
         zope.interface.verify.verifyClass(INode, Literal)
         zope.interface.verify.verifyClass(ILiteral, Literal)
-        lit = Literal("Héhé")
-        self.assertEqual(lit.value, "Héhé")
+        lit = Literal(u"Héhé")
+        self.assertEqual(lit.value, u"Héhé")
         self.assertEqual(lit.language, None)
         self.assertEqual(lit.type, None)
         # test with unicode value
         same_lit = Literal(u'H\xe9h\xe9')
-        other_lit = Literal("Héhéhé")
+        other_lit = Literal(u"Héhéhé")
         self.assertEqual(lit, same_lit)
         self.assertEqual(hash(lit), hash(same_lit))
         self.assertNotEqual(lit, other_lit)

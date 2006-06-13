@@ -131,7 +131,7 @@ class TestRedlandGraph(RedlandGraphTestCase):
         blank = self.graph._getRedlandNode(Blank('blank'))
         self.assertEqual(blank, RDF.Node(blank='blank'))
 
-        lit = self.graph._getRedlandNode(Literal("Héhé"))
+        lit = self.graph._getRedlandNode(Literal(u"Héhé"))
         # use utf-8 encoded value
         self.assertEqual(lit, RDF.Node(literal="H\xc3\xa9h\xc3\xa9"))
 
@@ -176,7 +176,7 @@ class TestRedlandGraph(RedlandGraphTestCase):
 
         # use utf-8 encoded value
         lit = self.graph._getCPSNode(RDF.Node(literal="H\xc3\xa9h\xc3\xa9"))
-        self.assertEqual(lit, Literal("Héhé"))
+        self.assertEqual(lit, Literal(u"Héhé"))
 
         # literal with language
         lit = self.graph._getCPSNode(RDF.Node(literal="Haha", language="en"))
@@ -647,20 +647,20 @@ again</cps:dummy>
     def test_StatementResource(self):
         statement = Statement(IVersionHistoryResource(self.proxy1),
                               PrefixedResource('cps', 'hasTitle'),
-                              Literal("Héhéhé"))
+                              Literal(u"Héhéhé"))
         resource = zope.component.queryMultiAdapter(
             (statement, self.graph),
             IStatementResource)
         self.assertEqual(resource.uri,
-                         "statement:99bcb5eb870cde82f23dd96dd35d570b0b237ad4")
+                         "statement:56d6d923420f177924e1873e787374fd4617b054")
         self.assertEqual(resource.prefix, "statement")
         self.assertEqual(resource.localname,
-                         "99bcb5eb870cde82f23dd96dd35d570b0b237ad4")
+                         "56d6d923420f177924e1873e787374fd4617b054")
 
         # test resource is the same even if given statement is different
         other_statement = Statement(PrefixedResource('docid', '12345'),
                                     PrefixedResource('cps', 'hasTitle'),
-                                    Literal("Héhéhé"))
+                                    Literal(u"Héhéhé"))
         other_resource = zope.component.queryMultiAdapter(
             (other_statement, self.graph),
             IStatementResource)

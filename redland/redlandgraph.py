@@ -48,7 +48,7 @@ QueryResults.make_results_hash = make_results_hash
 def __repr__(self):
     old_repr = object.__repr__(self)
     address = old_repr[len('<RDF.Node object at '):-1]
-    return "<RDF.Node for %s at %s>" % (str(self), address)
+    return "<RDF.Node for %s at %s>" % (repr(self), address)
 
 Node.__repr__ = __repr__
 
@@ -290,8 +290,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
             rnode = RDF.Node(blank=node.id)
         elif ILiteral.providedBy(node):
             value = node.value
-            # encode it into utf-8, Redland requires it
-            value = value.decode('iso-8859-15', 'ignore')
+            # encode it into utf-8, Redland requires it - unicode does not do
+            # the trick :(
             value = value.encode('utf-8', 'ignore')
             if node.type:
                 # typed literal
@@ -338,8 +338,7 @@ class RedlandGraph(UniqueObject, PortalFolder):
             node = Blank(rnode.blank_identifier)
         elif rnode.is_literal():
             literal_value = rnode.literal_value
-            # decode from unicode even if Literal could deal with it
-            value = literal_value['string'].encode('iso-8859-15')
+            value = literal_value['string']
             # decode from Uri type
             dt_uri = literal_value['datatype']
             if dt_uri is not None:
