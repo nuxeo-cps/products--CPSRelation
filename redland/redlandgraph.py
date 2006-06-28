@@ -272,6 +272,9 @@ class RedlandGraph(UniqueObject, PortalFolder):
     security.declarePrivate('_getRedlandNode')
     def _getRedlandNode(self, node):
         """Get an RDF.Node object from an INode
+
+        Change unicode values into utf-8 encoded values because Redland does
+        not accept unicode.
         """
         if node is None:
             rnode = None
@@ -281,18 +284,26 @@ class RedlandGraph(UniqueObject, PortalFolder):
                 ns_bindings = self.getNamespaceBindings()
                 namespace = ns_bindings.get(node.prefix)
                 if namespace is not None:
-                    temp_node = RDF.NS(namespace)[node.localname]
+                    localname = node.localname
+                    if isinstance(localname, unicode):
+                        localname = localname.encode('utf-8', 'ignore')
+                    temp_node = RDF.NS(namespace)[localname]
             if temp_node is None:
                 # no namespace used
-                temp_node = RDF.Node(uri_string=node.uri)
+                uri = node.uri
+                if isinstance(uri, unicode):
+                    uri = uri.encode('utf-8', 'ignore')
+                temp_node = RDF.Node(uri_string=uri)
             rnode = temp_node
         elif IBlank.providedBy(node):
-            rnode = RDF.Node(blank=node.id)
+            id = node.id
+            if isinstance(id, unicode):
+                id = id.encode('utf-8', 'ignore')
+            rnode = RDF.Node(blank=id)
         elif ILiteral.providedBy(node):
             value = node.value
-            # encode it into utf-8, Redland requires it - unicode does not do
-            # the trick :(
-            value = value.encode('utf-8', 'ignore')
+            if isinstance(value, unicode):
+                value = value.encode('utf-8', 'ignore')
             if node.type:
                 # typed literal
                 rnode = RDF.Node(literal=value,
