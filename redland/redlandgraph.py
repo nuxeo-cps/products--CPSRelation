@@ -521,6 +521,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
         rdf_graph = self._getGraph()
         if base_uri is not None:
             base_uri = RDF.Uri(base_uri)
+        if isinstance(query_string, unicode):
+            query_string = query_string.encode('utf-8', 'ignore')
         query = RDF.Query(query_string, base_uri=base_uri,
                           query_language=language)
         rresults = rdf_graph.execute(query)
