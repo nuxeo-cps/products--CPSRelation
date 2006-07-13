@@ -1,0 +1,43 @@
+==================================
+CPSRelation transaction extensions
+==================================
+
+:Author: Anahide Tchertchian
+:Revision: $Id$
+
+.. sectnum::    :depth: 2
+.. contents::   :depth: 2
+
+
+Introduction
+============
+
+Some graphs may use non-tansactional backends: in order to avoid
+adding/removing statements in graphs when a Zope transaction is not
+commited, CPSRelation uses the CPS transaction extensions.
+
+For more information about these extensions, please refer to the
+documentation at CPSCore/doc/transaction_managers.txt
+
+
+Usage in CPSRelation
+====================
+
+Graphs carry a synchronous/asynchronous boolean flag that is used to
+determine if statements addition/deletion should be delayed to the end of
+the transaction, just before committing.
+
+For IOBTree graphs, as the ZODB backend is transactional, this feature is
+not implemented: asynchronous behaviour is *not* allowed.
+
+For Redland graphs, this feature is implemented, but optional: some third
+party code may have the requirement to add a statement *and* check if it's
+in the graph in the same transaction.
+
+
+.. Emacs
+.. Local Variables:
+.. mode: rst
+.. End:
+.. Vim
+.. vim: set filetype=rst:
