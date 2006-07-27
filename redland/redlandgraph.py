@@ -503,19 +503,20 @@ class RedlandGraph(UniqueObject, PortalFolder):
         if self.backend == 'memory':
             self.logger.warn("_getGraph: recreating memory storage")
             options = "new='yes',hash-type='memory',dir='.'"
-            storage = Storage(storage_name="hashes",
-                              name=self.id,
-                              options_string=options)
+            storage = RDF.Storage(storage_name="hashes",
+                                  name=self.id,
+                                  options_string=options)
         elif self.backend == 'bdb':
             self.logger.debug("_getGraph: recreating bdb storage")
             dir_path = os.path.join(CLIENT_HOME, self.bdb_path)
-            storage = HashStorage(dir_path, options="new='yes',hash-type='bdb'")
+            storage = RDF.HashStorage(dir_path,
+                                      options="new='yes',hash-type='bdb'")
         elif self.backend == 'mysql':
             self.logger.debug("_getGraph: recreating mysql storage")
             options = self.mysql_options + "new='yes',database='%s'"%self.id
-            storage = Storage(storage_name="mysql",
-                              name=self.id,
-                              options_string=options)
+            storage = RDF.Storage(storage_name="mysql",
+                                  name=self.id,
+                                  options_string=options)
         else:
             raise ValueError("Backend %s not supported "
                              "for graph %s" %(self.backend, self.id))
