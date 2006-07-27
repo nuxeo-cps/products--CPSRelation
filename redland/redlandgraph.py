@@ -500,15 +500,26 @@ class RedlandGraph(UniqueObject, PortalFolder):
     def clear(self):
         """Clear the graph, removing all statements in it
         """
-        rdf_graph = self._getGraph()
-        # XXX AT: RDF.Model.__del__ is buggy
-        #del rdf_graph
-        statement = Statement(None, None, None)
-        rstatement = self._getRedlandStatement(statement)
-        riterator = rdf_graph.find_statements(rstatement)
-        items = list(riterator)
-        for item in items:
-            rdf_graph.remove_statement(item)
+        if self.backend == 'memory':
+            self.logger.warn("_getGraph: recreating memory storage")
+            options = "new='yes',hash-type='memory',dir='.'"
+            storage = Storage(storage_name="hashes",
+                              name=self.id,
+                              options_string=options)
+        elif self.backend == 'bdb':
+            self.logger.debug("_getGraph: recreating bdb storage")
+            dir_path = os.path.join(CLIENT_HOME, self.bdb_path)
+            storage = HashStorage(dir_path, options="new='yes',hash-type='bdb'")
+        elif self.backend == 'mysql':
+            self.logger.debug("_getGraph: recreating mysql storage")
+            options = self.mysql_options + "new='yes',database='%s'"%self.id
+            storage = Storage(storage_name="mysql",
+                              name=self.id,
+                              options_string=options)
+        else:
+            raise ValueError("Backend %s not supported "
+                             "for graph %s" %(self.backend, self.id))
+        self._v_storage = storage
 
 
     security.declareProtected(View, '__len__')

@@ -9,6 +9,8 @@ Bug fixes:
 - Statement reification attempt did not take care of the graph internal
   representation
 - Querying a Redland graph with a unicode query string was not possible.
+- The method to delete all relations now recreates the storage, instead
+  of deleting all the relations.
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Redland graphs: database name with mysql backend can be specified in ZMI.
