@@ -55,8 +55,7 @@ def getCapsuleProxyVersionHistoryResource(proxy):
     """return a VersionHistoryResource from a ICapsuleProxy
     """
     document = proxy.getContent()
-    docid = document.getDocid()
-    return VersionHistoryResource(docid)
+    return IVersionHistoryResource(document)
 
 
 @zope.component.adapter(ICapsuleDocument)
