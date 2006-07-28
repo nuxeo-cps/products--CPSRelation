@@ -34,7 +34,7 @@ from Products.CPSCore.commithooks import get_after_commit_subscribers_manager
 _TXN_MGR_ATTRIBUTE = '_cps_relation_manager'
 _TXN_MGR_ORDER = 0
 
-logger = logging.getLogger("CPSRelation.RelationManager")
+logger = logging.getLogger("CPSRelation.commithooks.RelationManager")
 
 class RelationManager(AfterCommitSubscriber):
     """Holds data about relations additions/removals to be done.

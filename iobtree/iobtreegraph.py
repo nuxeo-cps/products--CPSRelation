@@ -38,7 +38,7 @@ from Products.CPSRelation.statement import Statement
 from Products.CPSRelation.iobtree.iobtreerelation import IOBTreeRelation
 from Products.CPSRelation.graphregistry import GraphRegistry
 from Products.CPSRelation.graphdrawer import GraphDrawer
-from Products.CPSRelation.transactionmanager import get_relation_manager
+from Products.CPSRelation.commithooks import get_relation_manager
 
 
 class IOBTreeGraph(UniqueObject, PortalFolder):

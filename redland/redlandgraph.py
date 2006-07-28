@@ -95,7 +95,7 @@ from Products.CPSRelation.graphdrawer import GraphDrawer
 # query
 from Products.CPSRelation.query import QueryResult
 
-from Products.CPSRelation.transactionmanager import get_relation_manager
+from Products.CPSRelation.commithooks import get_relation_manager
 
 #
 # Graph

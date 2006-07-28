@@ -28,9 +28,9 @@ from difflib import ndiff
 
 from Products.CPSRelation.tests.test_redland import USE_REDLAND
 
-from Products.CPSRelation.transactionmanager import RelationManager
-from Products.CPSRelation.transactionmanager import get_relation_manager
-from Products.CPSRelation.transactionmanager import del_relation_manager
+from Products.CPSRelation.commithooks import RelationManager
+from Products.CPSRelation.commithooks import get_relation_manager
+from Products.CPSRelation.commithooks import del_relation_manager
 
 from Products.CPSRelation.node import Resource
 from Products.CPSRelation.node import Literal
@@ -292,8 +292,8 @@ class RelationManagerRedlandTest(RelationManagerTest):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(RelationManagerIOBTreeTest))
-    #if USE_REDLAND:
-    #    suite.addTest(unittest.makeSuite(RelationManagerRedlandTest))
+    if USE_REDLAND:
+        suite.addTest(unittest.makeSuite(RelationManagerRedlandTest))
     return suite
 
 if __name__ == '__main__':
