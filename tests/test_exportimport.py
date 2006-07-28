@@ -74,6 +74,10 @@ class ExportImportTest(ExportImportTestCase):
         self.assertEquals(list(rtool.objectIds()), ['iobtree_graph'])
         graph = rtool.iobtree_graph
         self.assertEquals(graph.meta_type, 'IOBTree Graph')
+        property_items = [
+            ('synchronous', True),
+            ]
+        self.assertEquals(graph.propertyItems(), property_items)
         self.assertEquals(graph.listRelationIds(), ['hasPart'])
         hasPart = graph._getRelation('hasPart')
         self.assertEquals(hasPart.meta_type, 'IOBTree Relation')
@@ -142,6 +146,7 @@ class ExportImportTest(ExportImportTestCase):
                 'exp http://www.example.org/',
                 )
             property_items = [
+                ('synchronous', True),
                 ('backend', 'mysql'),
                 ('namespace_bindings', bindings),
                 ('bdb_path', ''),

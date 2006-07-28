@@ -38,6 +38,8 @@ from Products.CPSRelation.statement import Statement
 from Products.CPSRelation.iobtree.iobtreerelation import IOBTreeRelation
 from Products.CPSRelation.graphregistry import GraphRegistry
 from Products.CPSRelation.graphdrawer import GraphDrawer
+from Products.CPSRelation.transactionmanager import get_relation_manager
+
 
 class IOBTreeGraph(UniqueObject, PortalFolder):
     """Graph using IOBtree objects to store relations between integers
@@ -49,12 +51,25 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
 
     security = ClassSecurityInfo()
 
-    _properties = ()
+    _properties = (
+        {'id': 'synchronous', 'type': 'boolean', 'mode': 'w',
+         'label': "Synchronous",
+         },
+        )
+    # default values
+    synchronous = True
 
-    def __init__(self, id):
+    def __init__(self, id, synchronous=True):
         """Initialization
         """
         self.id = id
+        self.synchronous = synchronous
+
+    security.declarePrivate('_isSynchronous')
+    def _isSynchronous(self):
+        """Return True if graph is synchronous
+        """
+        return self.synchronous
 
     #
     # Relation types management
@@ -163,8 +178,8 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
         return res
 
 
-    security.declareProtected(View, 'add')
-    def add(self, statements):
+    security.declarePrivate('_add')
+    def _add(self, statements):
         """Add given list of IStatement objects to the graph
         """
         # sort statements by predicate
@@ -173,14 +188,34 @@ class IOBTreeGraph(UniqueObject, PortalFolder):
             iobtreerelation.add(tuples)
 
 
-    security.declareProtected(View, 'remove')
-    def remove(self, statements):
+    security.declareProtected(View, 'add')
+    def add(self, statements):
+        """Add given list of IStatement objects to the graph
+
+        Addition may be delayed to the end of the transaction if graph is
+        asynchronous.
+        """
+        get_relation_manager().add(self, statements)
+
+
+    security.declarePrivate('_remove')
+    def _remove(self, statements):
         """Remove given list of IStatement objects from the graph
         """
         # sort statements by predicate
         structure = self._getIOBTreeStatementsStructure(statements)
         for iobtreerelation, tuples in structure.items():
             iobtreerelation.remove(tuples)
+
+
+    security.declareProtected(View, 'remove')
+    def remove(self, statements):
+        """Remove given list of IStatement objects from the graph
+
+        Removal may be delayed to the end of the transaction if graph is
+        asynchronous.
+        """
+        get_relation_manager().remove(self, statements)
 
 
     security.declareProtected(View, 'getStatements')

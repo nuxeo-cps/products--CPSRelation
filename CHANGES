@@ -4,6 +4,7 @@ Requires:
 New features:
 ~~~~~~~~~~~~~
 - Moving to unicode for literal values
+- Adding a synchronous/asynchronous mode on graphs
 Bug fixes:
 ~~~~~~~~~~
 - Statement reification attempt did not take care of the graph internal

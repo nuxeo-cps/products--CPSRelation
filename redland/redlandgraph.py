@@ -95,6 +95,7 @@ from Products.CPSRelation.graphdrawer import GraphDrawer
 # query
 from Products.CPSRelation.query import QueryResult
 
+from Products.CPSRelation.transactionmanager import get_relation_manager
 
 #
 # Graph
@@ -116,6 +117,9 @@ class RedlandGraph(UniqueObject, PortalFolder):
     #
 
     _properties = (
+        {'id': 'synchronous', 'type': 'boolean', 'mode': 'w',
+         'label': "Synchronous",
+         },
         {'id': 'backend', 'type': 'selection', 'mode': 'w',
          'select_variable': 'supported_backends',
          'label': "Backend",
@@ -154,6 +158,7 @@ class RedlandGraph(UniqueObject, PortalFolder):
         'mysql',
         ]
     # default values
+    synchronous = True
     backend = 'memory'
     namespace_bindings = ()
     adapter_bindings = ()
@@ -197,6 +202,15 @@ class RedlandGraph(UniqueObject, PortalFolder):
             else:
                 self.mysql_options = mysql_options
         self.namespace_bindings = namespace_bindings
+        self.synchronous = kw.get('synchronous', True)
+
+
+    security.declarePrivate('_isSynchronous')
+    def _isSynchronous(self):
+        """Return True if graph is synchronous
+        """
+        return self.synchronous
+
 
     security.declarePrivate('_getGraph')
     def _getGraph(self):
@@ -384,8 +398,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
         return statement
 
 
-    security.declareProtected(View, 'add')
-    def add(self, statements):
+    security.declarePrivate('_add')
+    def _add(self, statements):
         """Add given list of IStatement objects to the graph
         """
         rdf_graph = self._getGraph()
@@ -394,14 +408,34 @@ class RedlandGraph(UniqueObject, PortalFolder):
             rdf_graph.append(rstatement)
 
 
-    security.declareProtected(View, 'remove')
-    def remove(self, statements):
+    security.declareProtected(View, 'add')
+    def add(self, statements):
+        """Add given list of IStatement objects to the graph
+
+        Addition may be delayed to the end of the transaction if graph is
+        asynchronous.
+        """
+        get_relation_manager().add(self, statements)
+
+
+    security.declarePrivate('_remove')
+    def _remove(self, statements):
         """Remove given list of IStatement objects from the graph
         """
         rdf_graph = self._getGraph()
         for statement in statements:
             rstatement = self._getRedlandStatement(statement)
             rdf_graph.remove_statement(rstatement)
+
+
+    security.declareProtected(View, 'remove')
+    def remove(self, statements):
+        """Remove given list of IStatement objects from the graph
+
+        Removal may be delayed to the end of the transaction if graph is
+        asynchronous.
+        """
+        get_relation_manager().remove(self, statements)
 
 
     security.declareProtected(View, 'getStatements')

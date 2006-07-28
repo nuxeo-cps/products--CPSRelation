@@ -26,13 +26,12 @@ Usage in CPSRelation
 Graphs carry a synchronous/asynchronous boolean flag that is used to
 determine if statements addition/deletion should be delayed to the end of
 the transaction, just before committing.
+Other operations will be synchronous (clearing the graph for instance).
 
-For IOBTree graphs, as the ZODB backend is transactional, this feature is
-not implemented: asynchronous behaviour is *not* allowed.
+The transaction manager itself synchronism is ignored.
 
-For Redland graphs, this feature is implemented, but optional: some third
-party code may have the requirement to add a statement *and* check if it's
-in the graph in the same transaction.
+This feature is optional: some third party code may have the requirement to
+add a statement *and* check if it's in the graph in the same transaction.
 
 
 .. Emacs

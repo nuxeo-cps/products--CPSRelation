@@ -30,8 +30,24 @@ class IGraph(zope.interface.Interface):
     """Interface for graphs/models dealing with relations
     """
 
+    synchronous = zope.interface.Attribute("Synchronous")
+
+    def _add(statements):
+        """Add given list of IStatement objects to the graph
+        """
+
     def add(statements):
         """Add given list of IStatement objects to the graph
+
+        Addition may be delayed to the end of the transaction if graph is
+        asynchronous.
+        """
+
+    def _remove(statements):
+        """Remove given list of IStatement objects from the graph
+
+        Removal may be delayed to the end of the transaction if graph is
+        asynchronous.
         """
 
     def remove(statements):
