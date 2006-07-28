@@ -20,15 +20,12 @@
 # $Id$
 """Manager for relations management that can be delayed until commit time.
 
-Always synchronous, synchronism depends on the graph synchronism, this
-transaction manager synchronism is ignored.
+Synchronism mode depends on the graph.
 """
 
 import logging
 import transaction
 import zope.interface
-
-from Acquisition import aq_base
 
 from Products.CPSCore.interfaces import IBeforeCommitSubscriber
 from Products.CPSCore.commithooks import BeforeCommitSubscriber
@@ -44,7 +41,8 @@ logger = logging.getLogger("CPSRelation.RelationManager")
 class RelationManager(BeforeCommitSubscriber):
     """Holds data about relations additions/removals to be done.
 
-    May be synchronous or not, but
+    Synchronism depends on the graph synchronism (this subscriber synchronism
+    is ignored).
     """
 
     zope.interface.implements(IBeforeCommitSubscriber)
@@ -145,9 +143,7 @@ def del_relation_manager():
 
 
 def get_relation_manager():
-    """Get the relation manager.
-
-    Creates it if needed.
+    """Get relation manager, creating it if needed.
     """
     txn = transaction.get()
     mgr = getattr(txn, _TXN_MGR_ATTRIBUTE, None)
