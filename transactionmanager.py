@@ -27,29 +27,27 @@ import logging
 import transaction
 import zope.interface
 
-from Products.CPSCore.interfaces import IBeforeCommitSubscriber
-from Products.CPSCore.commithooks import BeforeCommitSubscriber
-from Products.CPSCore.commithooks import get_before_commit_subscribers_manager
+from Products.CPSCore.interfaces import IAfterCommitSubscriber
+from Products.CPSCore.commithooks import AfterCommitSubscriber
+from Products.CPSCore.commithooks import get_after_commit_subscribers_manager
 
 _TXN_MGR_ATTRIBUTE = '_cps_relation_manager'
-
-# execute it just before CPSCore.IndexationManager (before any other managers)
-_TXN_MGR_ORDER = -200
+_TXN_MGR_ORDER = 0
 
 logger = logging.getLogger("CPSRelation.RelationManager")
 
-class RelationManager(BeforeCommitSubscriber):
+class RelationManager(AfterCommitSubscriber):
     """Holds data about relations additions/removals to be done.
 
     Synchronism depends on the graph synchronism (this subscriber synchronism
     is ignored).
     """
 
-    zope.interface.implements(IBeforeCommitSubscriber)
+    zope.interface.implements(IAfterCommitSubscriber)
 
     def __init__(self, mgr):
         """Initialize and register this manager with the transaction."""
-        BeforeCommitSubscriber.__init__(self, mgr, order=_TXN_MGR_ORDER)
+        AfterCommitSubscriber.__init__(self, mgr, order=_TXN_MGR_ORDER)
         # queue records operations by graph id
         self._queue = {}
 
@@ -116,23 +114,25 @@ class RelationManager(BeforeCommitSubscriber):
             self._queue[graph_id] = new
 
 
-    def __call__(self):
+    def __call__(self, status=True):
         """Called when transaction commits.
 
         Does the actual addition/deletion work.
         """
-        del_relation_manager()
+        # Only if the transaction has not been aborted.
+        if status is True:
+            del_relation_manager()
 
-        logger.debug("__call__")
+            logger.debug("__call__")
 
-        for graph_id, graph_info in self._queue.items():
-            logger.debug("__call__ processing %s" % graph_id)
-            graph = graph_info['graph']
-            graph._add(graph_info['add'])
-            graph._remove(graph_info['remove'])
-            del self._queue[graph_id]
+            for graph_id, graph_info in self._queue.items():
+                logger.debug("__call__ processing %s" % graph_id)
+                graph = graph_info['graph']
+                graph._add(graph_info['add'])
+                graph._remove(graph_info['remove'])
+                del self._queue[graph_id]
 
-        logger.debug("__call__ done")
+            logger.debug("__call__ done")
 
 
 def del_relation_manager():
@@ -148,6 +148,6 @@ def get_relation_manager():
     txn = transaction.get()
     mgr = getattr(txn, _TXN_MGR_ATTRIBUTE, None)
     if mgr is None:
-        mgr = RelationManager(get_before_commit_subscribers_manager())
+        mgr = RelationManager(get_after_commit_subscribers_manager())
         setattr(txn, _TXN_MGR_ATTRIBUTE, mgr)
     return mgr
