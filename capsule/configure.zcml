@@ -1,0 +1,8 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope">
+
+  <adapter factory=".node.getCapsuleDocumentVersionHistoryResource" />
+  <adapter factory=".node.getCapsuleDocumentRpathResource" />
+  <adapter factory=".node.getCapsuleProxyVersionHistoryResource" />
+
+</configure>

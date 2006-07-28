@@ -46,6 +46,13 @@
   <adapter factory=".node.getProxyVersionHistoryResource" />
   <adapter factory=".node.getProxyRpathResource" />
 
+  <!-- capsule adapters -->
+
+  <configure
+    zcml:condition="installed nuxeo.capsule">
+    <include package=".capsule"/>
+  </configure>
+
   <!-- specific graphs configurations -->
 
   <include
