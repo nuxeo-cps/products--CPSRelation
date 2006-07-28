@@ -5,6 +5,7 @@ New features:
 ~~~~~~~~~~~~~
 - Moving to unicode for literal values
 - Adding a synchronous/asynchronous mode on graphs
+- Adding adapters to get some basic resources from capsule documents
 Bug fixes:
 ~~~~~~~~~~
 - Statement reification attempt did not take care of the graph internal
