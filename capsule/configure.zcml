@@ -1,8 +1,15 @@
 <configure
     xmlns="http://namespaces.zope.org/zope">
 
+  <!-- XXX AT: adapters are not registered to allow redefining in third
+       party products -->
+
+  <!--
+  <adapter factory=".node.getCapsuleDocumentVersionResource" />
+  <adapter factory=".node.getCapsuleFrozenDocumentVersionHistoryResource" />
   <adapter factory=".node.getCapsuleDocumentVersionHistoryResource" />
-  <adapter factory=".node.getCapsuleDocumentRpathResource" />
   <adapter factory=".node.getCapsuleProxyVersionHistoryResource" />
+  <adapter factory=".node.getCapsuleDocumentRpathResource" />
+  -->
 
 </configure>

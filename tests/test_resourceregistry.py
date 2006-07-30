@@ -44,9 +44,17 @@ class TestResourceRegistry(unittest.TestCase):
         ResourceRegistry._registry = self.save_registry
 
     def test_listResourcePrefixes(self):
-        res = list(ResourceRegistry.listResourcePrefixes())
-        res.sort()
-        self.assertEquals(res, ['docid', 'rpath', 'statement', 'uuid'])
+        res = ResourceRegistry.listResourcePrefixes()
+        for basic in [
+            'docid',
+            'rpath',
+            'statement',
+            'uuid',
+            # capsule dependency
+            #'cuuid',
+            ]:
+            self.assertEquals(basic in res, True,
+                              msg="%s is not a registered prefix" %(basic,))
 
     def test_register(self):
         ResourceRegistry.register(DummyResource)

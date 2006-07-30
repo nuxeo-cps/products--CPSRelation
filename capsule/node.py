@@ -27,38 +27,96 @@ import zope.component
 
 from Products.CMFCore.utils import getToolByName
 
-from nuxeo.capsule.interfaces import IDocument as ICapsuleDocument
-from nuxeo.capsule.interfaces import IProxy as ICapsuleProxy
+from nuxeo.capsule.interfaces import IDocument
+from nuxeo.capsule.interfaces import IFrozenDocument
+from nuxeo.capsule.interfaces import IProxy
 
+from Products.CPSRelation.resourceregistry import ResourceRegistry
+
+from Products.CPSRelation.interfaces import IVersionResource
 from Products.CPSRelation.interfaces import IVersionHistoryResource
 from Products.CPSRelation.interfaces import IRpathResource
 
+from Products.CPSRelation.node import VersionResource
 from Products.CPSRelation.node import VersionHistoryResource
 from Products.CPSRelation.node import RpathResource
 
 
-# XXX AT: cannot get an integer revision number for VersionResource for now =>
-# not implemented as it is
+#
+# version
+#
 
-@zope.component.adapter(ICapsuleDocument)
+class CapsuleVersionResource(VersionResource):
+    """Capsule Version resource
+    """
+
+    zope.interface.implements(IVersionResource)
+    prefix = 'cuuid'
+
+    def __init__(self, localname=''):
+        """Init for resource, only use localname
+        """
+        self.localname = localname
+        self.uri = self.prefix + ':' + localname
+        # XXX AT: useless, just here to follow the interface
+        self.docid = self.localname
+        self.revision = 0
+
+ResourceRegistry.register(CapsuleVersionResource)
+
+
+# getCapsuleDocumentVersionResource will do the trick for frozen documents as
+# well as proxies (which are also IDocument instances)
+
+
+@zope.component.adapter(IDocument)
+@zope.interface.implementer(IVersionResource)
+def getCapsuleDocumentVersionResource(document):
+    """return a CapsuleVersionResource from a capsule document
+    """
+    uuid = document.getUUID()
+    return CapsuleVersionResource(uuid)
+
+
+#
+# version history
+#
+
+# XXX AT: cannot get an integer revision number for VersionHistoryResource =>
+# cannot be used with IOBTree graphs
+
+@zope.component.adapter(IDocument)
 @zope.interface.implementer(IVersionHistoryResource)
 def getCapsuleDocumentVersionHistoryResource(document):
-    """return a VersionHistoryResource from a ICapsuleDocument
+    """return a IVersionHistoryResource from a IDocument
     """
-    docid = document.getDocid()
-    return VersionHistoryResource(docid)
+    uuid = document.getUUID()
+    return VersionHistoryResource(uuid)
 
+@zope.component.adapter(IFrozenDocument)
+@zope.interface.implementer(IVersionHistoryResource)
+def getCapsuleFrozenDocumentVersionHistoryResource(document):
+    """return a IVersionHistoryResource from a IFrozenDocument
+    """
+    uuid = document.getOriginalUUID()
+    return VersionHistoryResource(uuid)
 
-@zope.component.adapter(ICapsuleProxy)
+@zope.component.adapter(IProxy)
 @zope.interface.implementer(IVersionHistoryResource)
 def getCapsuleProxyVersionHistoryResource(proxy):
-    """return a VersionHistoryResource from a ICapsuleProxy
+    """return a IVersionHistoryResource from a IProxy
     """
     document = proxy.getContent()
     return IVersionHistoryResource(document)
 
+#
+# rpath
+#
 
-@zope.component.adapter(ICapsuleDocument)
+# getCapsuleDocumentRpathResource will do the trick for frozen documents as
+# well as proxies (which are also IDocument instances)
+
+@zope.component.adapter(IDocument)
 @zope.interface.implementer(IRpathResource)
 def getCapsuleDocumentRpathResource(document):
     """return a RpathResource from a capsule document
@@ -67,6 +125,3 @@ def getCapsuleDocumentRpathResource(document):
     # query the url tool to get the relative path
     rpath = utool.getRpath(document)
     return RpathResource(rpath)
-
-# getCapsuleDocumentRpathResource will do the trick for frozen documents as
-# well as proxies (which are also ICapsuleDocument instances)
