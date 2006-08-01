@@ -71,7 +71,7 @@ class RelationManager(AfterCommitSubscriber):
         # add statements to add to the right queue for given graph, duplicate
         # statements are not handled
         if self._queue.has_key(graph_id):
-            current = self.queue[graph_id]
+            current = self._queue[graph_id]
             current['add'].extend(statements)
             self._queue[graph_id] = current
         else:
