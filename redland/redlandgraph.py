@@ -659,7 +659,6 @@ class RedlandGraph(UniqueObject, PortalFolder):
         else:
             res = serializer.serialize_model_to_file(destination, rdf_graph,
                                                      base_uri=base)
-        print res
         return res
 
 
