@@ -237,8 +237,7 @@ class StatementResource(PrefixedResource):
     prefix = 'statement'
 
     def __init__(self, localname):
-        self.rpath = localname
-        self.localname = self.rpath
+        self.localname = localname
         self.uri = self.prefix + ':' + self.localname
 
 ResourceRegistry.register(StatementResource)
