@@ -128,8 +128,10 @@ class RelationManager(AfterCommitSubscriber):
             for graph_id, graph_info in self._queue.items():
                 logger.debug("__call__ processing %s" % graph_id)
                 graph = graph_info['graph']
-                graph._add(graph_info['add'])
+                # remove before, so that relations to add are not removed
+                # after, this could be useful for updates.
                 graph._remove(graph_info['remove'])
+                graph._add(graph_info['add'])
                 del self._queue[graph_id]
 
             logger.debug("__call__ done")

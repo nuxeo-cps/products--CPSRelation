@@ -13,6 +13,9 @@ Bug fixes:
 - Querying a Redland graph with a unicode query string was not possible.
 - The method to delete all relations now recreates the storage, instead
   of deleting all the relations.
+- Commit hooks could cause relations to be added and removed in a row so
+  removals are done after additions (use case may happen when updating
+  relations)
 New internal features:
 ~~~~~~~~~~~~~~~~~~~~~~
 - Redland graphs: database name with mysql backend can be specified in ZMI.
