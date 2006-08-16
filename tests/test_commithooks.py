@@ -236,28 +236,36 @@ class RelationManagerTest(unittest.TestCase):
         self.assertEquals(self.other_graph._isSynchronous(), False)
         self.assertEquals(len(self.graph), 0)
         self.assertEquals(len(self.other_graph), 0)
-        # addand remove
-        self.graph.add(self.statements)
+        # previous addition
+        self.graph.add([self.statements[0]])
+        self.other_graph.add([self.statements[-1]])
+        transaction.commit()
+        self.assertEquals(len(self.graph), 1)
+        self.assertEquals(len(self.other_graph), 1)
+        # add and remove
+        mgr = get_relation_manager()
+        self.graph.add(self.statements[1:])
         self.graph.remove([self.statements[0]])
-        self.other_graph.add(self.statements)
+        self.other_graph.add(self.statements[:-1])
         self.other_graph.remove([self.statements[-1]])
-        self.assertEquals(len(self.graph), 0)
-        self.assertEquals(len(self.other_graph), 0)
+        self.assertEquals(len(self.graph), 1)
+        self.assertEquals(len(self.other_graph), 1)
         queue = {
             self.graph.getId(): {
                 'graph': self.graph,
-                'add': self.statements,
+                'add': self.statements[1:],
                 'remove': [self.statements[0]],
                 },
             self.other_graph.getId(): {
                 'graph': self.other_graph,
-                'add': self.statements,
+                'add': self.statements[:-1],
                 'remove': [self.statements[-1]],
                 },
             }
         self.assertEquals(mgr._queue, queue)
         # commit
         transaction.commit()
+        # XXX addition has been done after removal
         self.assertEquals(self.graph.getStatements(),
                           self.statements[1:])
         self.assertEquals(self.other_graph.getStatements(),

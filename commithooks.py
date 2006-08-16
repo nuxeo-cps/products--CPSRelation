@@ -82,7 +82,6 @@ class RelationManager(AfterCommitSubscriber):
                 }
             self._queue[graph_id] = new
 
-
     def remove(self, graph, statements):
         """Process given statements to remove from given graph
         """
