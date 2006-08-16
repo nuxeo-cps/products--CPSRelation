@@ -275,10 +275,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
         """
         bindings_dict = {}
         for binding in self.namespace_bindings:
-            sep_index = binding.find(' ')
-            if sep_index != -1:
-                key = binding[:sep_index]
-                value = binding[sep_index+1:]
+            if ' ' in binding:
+                key, value = binding.split(' ', 1)
                 bindings_dict[key] = value
         return bindings_dict
 
