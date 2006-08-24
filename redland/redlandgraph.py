@@ -299,6 +299,8 @@ class RedlandGraph(UniqueObject, PortalFolder):
                     localname = node.localname
                     if isinstance(localname, unicode):
                         localname = localname.encode('utf-8', 'ignore')
+                    if isinstance(namespace, unicode):
+                        namespace = namespace.encode('utf-8', 'ignore')
                     temp_node = RDF.NS(namespace)[localname]
             if temp_node is None:
                 # no namespace used
