@@ -614,6 +614,93 @@ WHERE {
         self.assertEqual(result.results, expected)
 
 
+    def test_query_node_type(self):
+        # test query meaning "all nodes that dont have that other relation"
+        graph = RedlandGraph('dummy', backend='memory',
+                             namespace_bindings=self.namespace_bindings)
+        pred_dum = PrefixedResource('cps', 'dummy')
+        lit = Literal('dummy')
+        statements = [
+            Statement(PrefixedResource('cps', 'cps2'),
+                      PrefixedResource('cps', 'dummy'),
+                      Literal("My literal")),
+            Statement(PrefixedResource('cps', 'cps3'),
+                      PrefixedResource('cps', 'dummy'),
+                      Resource("http://my/resource")),
+            Statement(PrefixedResource('cps', 'cps4'),
+                      PrefixedResource('cps', 'dummy'),
+                      PrefixedResource('cps', "my/cps/resource")),
+            ]
+        self.graph.add(statements)
+
+        # filter literals
+        query = """
+        PREFIX cps: <%s>
+SELECT ?subj
+WHERE {
+  ?subj cps:dummy ?obj .
+  FILTER isLiteral(?obj)
+}
+"""%(self.graph.getNamespaceBindings().get('cps'),)
+
+        result = self.graph.query(query, 'sparql')
+        expected = [
+            {'subj': PrefixedResource('cps', 'cps2')},
+            ]
+        self.assertEqual(result.results, expected)
+
+        # filter uris
+        query = """
+        PREFIX cps: <%s>
+SELECT ?subj
+WHERE {
+  ?subj cps:dummy ?obj .
+  FILTER isUri(?obj)
+}
+"""%(self.graph.getNamespaceBindings().get('cps'),)
+
+        result = self.graph.query(query, 'sparql')
+        expected = [
+            {'subj': PrefixedResource('cps', 'cps3')},
+            {'subj': PrefixedResource('cps', 'cps4')},
+            ]
+        self.assertEqual(result.results, expected)
+
+        # filter resource types
+        query = """
+        PREFIX cps: <%s>
+SELECT ?subj
+WHERE {
+  ?subj cps:dummy ?obj .
+  FILTER (isUri(?obj) && REGEX(?obj, "^%s.*"))
+}
+"""%(self.graph.getNamespaceBindings().get('cps'),
+     self.graph.getNamespaceBindings().get('cps'),)
+
+        result = self.graph.query(query, 'sparql')
+        expected = [
+            {'subj': PrefixedResource('cps', 'cps4')},
+            ]
+        self.assertEqual(result.results, expected)
+
+        # filter other resource types
+        query = """
+        PREFIX cps: <%s>
+SELECT ?subj
+WHERE {
+  ?subj cps:dummy ?obj .
+  FILTER (isUri(?obj) && !REGEX(?obj, "^%s.*"))
+}
+"""%(self.graph.getNamespaceBindings().get('cps'),
+     self.graph.getNamespaceBindings().get('cps'),)
+
+        result = self.graph.query(query, 'sparql')
+        expected = [
+            {'subj': PrefixedResource('cps', 'cps3')},
+            ]
+        self.assertEqual(result.results, expected)
+
+
     def test_read(self):
         test_graph = RedlandGraph('dummy', backend='memory')
 
