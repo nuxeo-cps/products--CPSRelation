@@ -1,3 +1,33 @@
+===========================================================
+Package: CPSRelation 2.1.0-abstraction
+===========================================================
+First release built by: anahide at: 2006-10-06T11:57:15
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/tags/2.1.0-abstraction
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/branches/abstraction@49385
+
+Requires:
+~~~~~~~~~
+-
+New features:
+~~~~~~~~~~~~~
+- Moving to unicode for literal values
+- Adding a synchronous/asynchronous mode on graphs
+- Adding adapters to get some basic resources from capsule documents
+Bug fixes:
+~~~~~~~~~~
+- Statement reification attempt did not take care of the graph internal
+  representation
+- Querying a Redland graph with a unicode query string was not possible.
+- The method to delete all relations now recreates the storage, instead
+  of deleting all the relations.
+- Commit hooks could cause relations to be added and removed in a row so
+  removals are done after additions (use case may happen when updating
+  relations)
+New internal features:
+~~~~~~~~~~~~~~~~~~~~~~
+- Redland graphs: database name with mysql backend can be specified in ZMI.
+- Redland graphs: graph clearing was failing using a MySQL backend.
+
 *******************************************
 ** CPSRelation V2.0.0-abstraction [R1 build 2006/05/23-20:27 by anahide]
 ** SVN URL: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/branches/abstraction Revision: 45912
