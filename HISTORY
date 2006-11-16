@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSRelation 2.1.1
+===========================================================
+First release built by: gracinet at: 2006-11-16T18:22:37
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/tags/2.1.1
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSRelation/trunk@50011
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- [packaging] bundleman property
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSRelation 2.1.0-abstraction
 ===========================================================
 First release built by: anahide at: 2006-10-06T11:57:15
