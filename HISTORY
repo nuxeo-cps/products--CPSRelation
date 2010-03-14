@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSRelation 2.1.2
+===========================================================
+First release built by: gracinet at: 2010-03-14T16:27:48
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- Switch to mercurial DCVS and hgbundler release manager
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSRelation 2.1.1
 ===========================================================
 First release built by: gracinet at: 2006-11-16T18:22:37
