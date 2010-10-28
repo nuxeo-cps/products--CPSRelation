@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2268: profile import with purge destroyed existing relations
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
