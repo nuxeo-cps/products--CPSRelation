@@ -71,6 +71,26 @@ def importRelationTool(context):
     tool = getToolByName(site, REL_TOOL)
     importObjects(tool, '', context)
 
+def _purge_graph(graph, logger=None):
+    """Purge a graph from its relations. Return True is all have been deleted
+
+    A relation that has data is *not* deleted.
+    """
+    if logger is None:
+        import logging
+        logger = logging.getLogger(__name__)
+
+    removed_all = True
+    for rid, rel in list(graph.objectItems()):
+        if len(rel) > 0:
+            logger.info("In graph %r, relation %r has data. "
+                        "Remove it manually if you really want to",
+                        rid, graph.getId())
+            removed_all = False
+            continue
+        graph._delObject(rid)
+
+    return removed_all
 
 class RelationToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers):
     """XML importer and exporter for Relation tool.
@@ -97,6 +117,15 @@ class RelationToolXMLAdapter(XMLAdapterBase, ObjectManagerHelpers):
         self._initObjects(node)
         self._logger.info("Relation tool imported.")
 
+    def _purgeObjects(self):
+        """This adapter typically runs before the graph adapters."""
+        tool = self.context
+        todel = []
+        for graph in tool.objectValues():
+            if _purge_graph(graph, logger=self._logger):
+                todel.append(graph.getId())
+
+        tool.manage_delObjects(todel)
 
 class GraphXMLAdapter(XMLAdapterBase, PropertyManagerHelpers):
     """XML importer and exporter for a graph.
@@ -141,9 +170,7 @@ class GraphXMLAdapter(XMLAdapterBase, PropertyManagerHelpers):
         return fragment
 
     def _purgeRelations(self):
-        graph = self.context
-        for id in list(graph.objectIds()):
-            graph._delObject(id)
+        _purge_graph(self.context, self._logger)
 
     def _initRelations(self, node):
         graph = self.context
