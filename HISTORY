@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSRelation 2.2.1
+===========================================================
+First release built by: gracinet at: 2010-11-27T04:17:04
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2268: profile import with purge destroyed existing relations
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSRelation 2.2.0
 ===========================================================
 First release built by: gracinet at: 2010-07-23T02:32:51
