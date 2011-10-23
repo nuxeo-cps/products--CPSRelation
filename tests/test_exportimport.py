@@ -20,12 +20,16 @@
 """Tests for the CPSRelation export/import mechanism
 """
 
+import os
 import unittest
 from Testing import ZopeTestCase
 from Products.CPSUtil.testing.genericsetup import ExportImportTestCase
+import Products.CPSRelation
 from Products.CPSRelation.tests.test_redland import USE_REDLAND
 
 ZopeTestCase.installProduct('CPSRelation')
+
+TEST_PROFILES_PATH = os.path.join(os.path.split(__file__)[0], 'profiles')
 
 class ExportImportTest(ExportImportTestCase):
 
@@ -60,8 +64,8 @@ class ExportImportTest(ExportImportTestCase):
             'relations.xml',
             'serializers.xml',
             ]
-        self._checkExportProfile('CPSRelation/tests/profiles/default_export/',
-                                 toc_list)
+        self._checkExportProfile(
+            os.path.join(TEST_PROFILES_PATH, 'default_export'), toc_list)
 
     def test_basic_import_graphs(self):
         self.registerProfile('basic', "CPS Relation", "Basic profile",
@@ -124,7 +128,8 @@ class ExportImportTest(ExportImportTestCase):
             'serializers.xml',
             'serializers/test_serializer.xml',
            ]
-        self._checkExportProfile('CPSRelation/tests/profiles/basic',
+        import Products.CPSRelation
+        self._checkExportProfile(os.path.join(TEST_PROFILES_PATH, 'basic'),
                                  toc_list)
 
 
@@ -167,8 +172,8 @@ class ExportImportTest(ExportImportTestCase):
                 'relations.xml',
                 'relations/redland_graph.xml',
                ]
-            self._checkExportProfile('CPSRelation/tests/profiles/redland',
-                                     toc_list)
+            self._checkExportProfile(
+                os.path.join(TEST_PROFILES_PATH, 'redland'), toc_list)
 
 
 def test_suite():
